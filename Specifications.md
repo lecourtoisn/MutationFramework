@@ -18,37 +18,37 @@ Cette page HTML sera générée avec Java et utilisera bootstrap pour la mise en pa
 
 Nous avons établi une liste contenant un grand nombre de mutations sur différents types d’opérateurs, valeurs ou mots clefs en précisant l’endroit où elles s’appliquent (sélecteurs).
 
-### Mutation sur les opérateurs de calcul :
+#### Mutation sur les opérateurs de calcul :
 
   * +, -, *, /, %, pow(), sqrt()
 
-### Mutation sur les opérateurs de comparaison :
+#### Mutation sur les opérateurs de comparaison :
 
   * >,<, >=, <=, ==
   * .equals() , ==
 
-### Mutation sur les opérateurs logiques :
+#### Mutation sur les opérateurs logiques :
 
   * &&, ||
   * A && B <-> B && A (de même pour ||)
 
-### Mutation sur les booléens :
+#### Mutation sur les booléens :
 
   * true, false
 
-### Mutation sur les valeurs :
+#### Mutation sur les valeurs :
 
   * chiffres/nombres, 	random()
   * modifier la valeur des strings
   * modifier la valeur des constantes
   * modifier le tableau args du main 
 
-### Mutation sur les valeurs d’incrémentation d’une boucle :
+#### Mutation sur les valeurs d’incrémentation d’une boucle :
 
   * i++, i+=random()
   * post-incrémentation , pré-incrémentation
 
-### Mutation sur les mots clefs :
+#### Mutation sur les mots clefs :
 
   * public, private, protected 		
   * supprimer this	
@@ -56,31 +56,32 @@ Nous avons établi une liste contenant un grand nombre de mutations sur différent
   * ajouter break
   * ajouter static
 
-### Mutation sur des lignes de code :
+#### Mutation sur des lignes de code :
 
   * supprimer la ligne
   * dupliquer une ligne	
   * permuter des lignes
 
-### Mutation sur des fonctions :
+#### Mutation sur des fonctions :
 
   * Changer l’ordre des arguments
   * Changer le nombre d’arguments
   * Changer le noms des fonctions ayant l’annotation “@override”
   * Supprimer les fonctions ayant l’annotation “@override”
 
-### Mutation sur les getters et setters :
+#### Mutation sur les getters et setters :
 
   * Les modifier/supprimer
 
-### Mutation sur les types :
+#### Mutation sur les types :
 
   * Supprimer un cast
   * Inverser classe mères/filles
 
-### Mutation sur les conditions :
+#### Mutation sur les conditions :
 
   * inverser l’ordre des bloques if, else if
+  
   
 Nous avons décidé de n’appliquer qu'une seule mutation par mutant, afin d'avoir un résultat plus précis en bout de chaîne. En effet, avec trop de mutations sur un programme, il sera plus difficile de cibler les portions de code qui ne sont pas correctement testées. 
 Il faudra créer suffisamment de mutants pour que le résultat soit pertinent mais il ne faudra pas non plus trop en créer pour avoir un temps d’exécution raisonnable. 
