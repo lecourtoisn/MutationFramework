@@ -82,7 +82,6 @@ Nous avons établi une liste contenant un grand nombre de mutations sur différent
 
   * inverser l’ordre des bloques if, else if
   
-  <br /> 
 Nous avons décidé de n’appliquer qu'une seule mutation par mutant, afin d'avoir un résultat plus précis en bout de chaîne. En effet, avec trop de mutations sur un programme, il sera plus difficile de cibler les portions de code qui ne sont pas correctement testées. 
 Il faudra créer suffisamment de mutants pour que le résultat soit pertinent mais il ne faudra pas non plus trop en créer pour avoir un temps d’exécution raisonnable. 
 Un couple (mutation,sélecteur) à appliquer sera sélectionnée de façon aléatoire dans la liste des mutations décrite ci-dessus. Si ce couple peut être appliqué à plusieurs emplacements du programme, l’un d’entre eux sera sélectionné aléatoirement.
