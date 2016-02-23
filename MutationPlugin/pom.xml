@@ -12,12 +12,6 @@
     <name>Mutant generator maven plugin</name>
 
     <dependencies>
-        <dependency>
-            <groupId>mutationframework</groupId>
-            <artifactId>processors</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
         <!-- Dependencies required to make the module a plugin -->
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -36,18 +30,21 @@
             <artifactId>spoon-core</artifactId>
             <version>4.4.1</version>
         </dependency>
+
+
+        <!-- Surefire -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.19.1</version>
+        </dependency>
     </dependencies>
 
 
 
 
     <build>
-        <plugins><!--
-            <plugin>
-                <groupId>mutationframework</groupId>
-                <artifactId>mutation-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </plugin>-->
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

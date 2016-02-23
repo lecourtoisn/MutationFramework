@@ -7,7 +7,7 @@ import spoon.Launcher;
 import spoon.SpoonModelBuilder;
 import spoon.processing.Processor;
 
-@Mojo(name="generate")
+@Mojo(name = "generate")
 public class MutantGeneration extends AbstractMojo{
 
     @Override
@@ -16,8 +16,8 @@ public class MutantGeneration extends AbstractMojo{
         Processor proc = new ReturnProcessor();
         api.addProcessor(proc);
         api.addInputResource("./src/main/java/");
-        String outputSrc = "./spooned/src/" + proc.getClass().getName() + "/";
-        String outputBin = "./spooned/classes/" + proc.getClass().getName() + "/";
+        String outputSrc = "./target/spooned/src/" + proc.getClass().getName() + "/";
+        String outputBin = "./target/spooned/classes/" + proc.getClass().getName() + "/";
 
 
         api.setSourceOutputDirectory(outputSrc);
