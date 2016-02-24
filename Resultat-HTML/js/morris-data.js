@@ -3,9 +3,9 @@ $(function() {
     Morris.Donut({
       element: 'morris-donut-chart',
       data: [
-        {value: 50.0, label: 'Mutants tués'},
-        {value: 0, label: 'Mutants morts nés'},
-        {value: 50.0, label: 'Mutants non tués'},
+        {value: 90, label: 'Mutants tues'},
+        {value: 0, label: 'Mutants morts nes'},
+        {value: 10, label: 'Mutants non tues'},
       ],
       formatter: function (x) { return x + "%"}
     }).on('click', function(i, row){
