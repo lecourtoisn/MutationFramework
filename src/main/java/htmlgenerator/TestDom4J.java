@@ -59,15 +59,14 @@ public class TestDom4J {
             FileReader lireFichier= new FileReader(adressedufichier);
 			String ligne = "";
 			int i = 0;
-			System.out.println("hello");
 			// Boucle permettant de parcourir tout le fichier
 			while((i = lireFichier.read()) != -1){
 				ligne += (char)i;
 			}
-			String nouvelleString="value: " + pourcentages.get(true) +", label: 'Mutants tués'";
-			String l2= ligne.replaceAll("value: (\\d*), label: 'Mutants tués'", nouvelleString);
-			String nouvelleString2="value: " + pourcentages.get(false) +", label: 'Mutants non tués'";
-			String l3= l2.replaceAll("value: (\\d*), label: 'Mutants non tués'", nouvelleString2);
+			String nouvelleString="value: " + pourcentages.get(true) +", label: 'Mutants tues'";
+			String l2= ligne.replaceAll("value: (\\d*), label: 'Mutants tues'", nouvelleString);
+			String nouvelleString2="value: " + pourcentages.get(false) +", label: 'Mutants non tues'";
+			String l3= l2.replaceAll("value: (\\d*), label: 'Mutants non tues'", nouvelleString2);
 			
 			FileWriter ecrireFichier = new FileWriter(adressedufichier, false);
 			ecrireFichier.write(l3); 
