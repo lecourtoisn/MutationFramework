@@ -16,32 +16,38 @@ public class MutantGeneration extends AbstractMojo{
 
 
     public File createMutantProject(Processor proc) {
-        String mutantProjectPath = "target/spooned/" + proc.getClass().getSimpleName() + "/";
-        System.out.println(mutantProjectPath);
+        String mutantName = proc.getClass().getSimpleName();
+        File mutantRootPath = new File("target/spooned/");
+        String mutantProjectPath = "target/spooned/" + mutantName + "/";
 
         Runtime rt = Runtime.getRuntime();
-        File mutantProjectDir = new File(mutantProjectPath);
-        System.out.println(mutantProjectDir.getAbsolutePath());
-        System.out.println(mutantProjectDir);
-        boolean mkdirs = mutantProjectDir.mkdirs();
 
+        //File mutantProjectDir = new File(mutantProjectPath);
 
-        System.out.println(mkdirs + " => that the directories have been created");
-        System.out.println(mutantProjectDir.exists() + " => that the directories have been created");
+        boolean mkdirs = mutantRootPath.mkdirs();
+
+        if (!mkdirs) {
+            return null;
+        }
+
+        String archetypeCommand = "cmd.exe /c" +
+                " mvn archetype:generate -B" +
+                " -DarchetypeGroupId=org.apache.maven.archetypes" +
+                " -DarchetypeArtifactId=maven-archetype-quickstart" +
+                " -DgroupId=" + mutantName +
+                " -DartifactId=" + mutantName +
+                " -Dversion=1" +
+                " -Dpackage=sample";
 
         try {
-            //rt.exec("cmd.exe /c mvn archetype:generate -B -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-simple -DgroupId=truc -DartifactId=bidule -Dversion=1.0 -Dpackage=tructoo", null, mutantProjectDir);
-            rt.exec("cmd.exe /c mvn archetype:generate -B -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-simple -DgroupId=truc -DartifactId=bidule -Dversion=1.0 -Dpackage=tructoo, -DbaseDir=" + mutantProjectPath);
+            Process exec = rt.exec(archetypeCommand, null, mutantRootPath);
+            exec.waitFor();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-
-        /*MavenCli cli = new MavenCli();
-        int result = cli.doMain(new String[]{"compile"},
-                "/home/aioffe/workspace/MiscMaven",
-                System.out, System.out);
-        System.out.println("result: " + result);*/
 
         return new File(mutantProjectPath);
     }
@@ -53,16 +59,15 @@ public class MutantGeneration extends AbstractMojo{
 
 
         File mutantProject = createMutantProject(proc);
-        if (1 == 1) return;
+        File mutantClasses = new File(mutantProject.getPath().concat("/target/classes"));
+        File mutantSources = new File(mutantProject.getPath().concat("/target/src"));
 
         api.addProcessor(proc);
         api.addInputResource("./src/main/java/");
-        String outputSrc = "./target/spooned/src/" + proc.getClass().getName() + "/";
-        String outputBin = "./target/spooned/classes/" + proc.getClass().getName() + "/";
 
 
-        api.setSourceOutputDirectory(outputSrc);
-        api.setBinaryOutputDirectory(outputBin);
+        api.setSourceOutputDirectory(mutantSources.getPath());
+        api.setBinaryOutputDirectory(mutantClasses.getPath());
 
         api.run();
 
