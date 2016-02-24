@@ -55,7 +55,6 @@ public class TestDom4J {
         
         try
         {
-            
             FileReader lireFichier= new FileReader(adressedufichier);
 			String ligne = "";
 			int i = 0;
@@ -64,9 +63,9 @@ public class TestDom4J {
 				ligne += (char)i;
 			}
 			String nouvelleString="value: " + pourcentages.get(true) +", label: 'Mutants tues'";
-			String l2= ligne.replaceAll("value: (\\d*), label: 'Mutants tues'", nouvelleString);
+			String l2= ligne.replaceAll("value: (\\d*).(\\d*), label: 'Mutants tues'", nouvelleString);
 			String nouvelleString2="value: " + pourcentages.get(false) +", label: 'Mutants non tues'";
-			String l3= l2.replaceAll("value: (\\d*), label: 'Mutants non tues'", nouvelleString2);
+			String l3= l2.replaceAll("value: (\\d*).(\\d*), label: 'Mutants non tues'", nouvelleString2);
 			
 			FileWriter ecrireFichier = new FileWriter(adressedufichier, false);
 			ecrireFichier.write(l3); 
@@ -93,9 +92,7 @@ public class TestDom4J {
      
      
      static public void genererOutPutHtml(Map<String, Boolean> mutants) {
-        for(String s: mutants.keySet()){
-        	//System.out.println("Clé:"+ s + "- tué:"+ mutants.get(s));
-        }
+
         String adressedufichier = "./Resultat-HTML/index.html";
         
         try
@@ -136,14 +133,6 @@ public class TestDom4J {
 
          Map<String, String> map = new HashMap<String, String>();
          ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
-
-         /*map = lireXML("test.xml");
-         list.add(map);
-         map = lireXML("test.xml");
-         list.add(map);
-
-         remplirDataGraph("output.html", list);
-         genererOutPutHtml("output.html", list);*/
          
          Map<String, Boolean> res=lireXML();
          remplirDataGraph(res);
