@@ -59,6 +59,7 @@ public class TestDom4J {
             FileReader lireFichier= new FileReader(adressedufichier);
 			String ligne = "";
 			int i = 0;
+			System.out.println("hello");
 			// Boucle permettant de parcourir tout le fichier
 			while((i = lireFichier.read()) != -1){
 				ligne += (char)i;
