@@ -32,6 +32,13 @@
                             <goal>generate</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>Testing mutants</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>testing</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
