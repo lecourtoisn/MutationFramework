@@ -4,6 +4,6 @@ public class ClassA {
     }
 
     public boolean methodB() {
-        return 3 > 2;
+        return 2 >= 2;
     }
 }

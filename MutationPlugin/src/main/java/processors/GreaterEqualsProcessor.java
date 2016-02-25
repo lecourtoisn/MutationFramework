@@ -8,7 +8,7 @@ public class GreaterEqualsProcessor extends AbstractProcessor<CtBinaryOperator<B
 
     @Override
     public boolean isToBeProcessed(CtBinaryOperator<BinaryOperatorKind> candidate) {
-        return candidate.getKind() == BinaryOperatorKind.GT;
+        return candidate.getKind() == BinaryOperatorKind.GE;
     }
 
     @Override

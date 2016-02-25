@@ -18,18 +18,18 @@ public class MutantTesting extends AbstractMojo {
         File mutantRootPath = new File("target/spooned/");
         File compiledClassDir = new File("target/test-classes");
 
-        File[] files = mutantRootPath.listFiles();
-        if (files == null) {
+        File[] mutantsDirectories = mutantRootPath.listFiles();
+        if (mutantsDirectories == null) {
             System.out.println("No mutants to test");
             return;
         }
-        for (File file : files) {
-            File spoonTestClassDir = new File(file.getPath().concat("/target/"));
+        for (File mutantDir : mutantsDirectories) {
+            File spoonTestClassDir = new File(mutantDir.getPath().concat("/target/"));
             try {
                 FileUtils.copyDirectoryToDirectory(compiledClassDir, spoonTestClassDir);
-                FileUtils.copyFileToDirectory(new File("pom.xml"), file);
+                FileUtils.copyFileToDirectory(new File("pom.xml"), mutantDir);
 
-                Runtime.getRuntime().exec("cmd.exe /c mvn surefire:test", null, file);
+                Runtime.getRuntime().exec("cmd.exe /c mvn surefire:test", null, mutantDir);
             } catch (IOException e) {
                 e.printStackTrace();
             }
