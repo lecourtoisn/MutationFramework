@@ -39,6 +39,13 @@
                             <goal>testing</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>Generating report</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
