@@ -19,7 +19,6 @@ public class MutantReport extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        System.out.println("BLABLABLA JE GENERE LE RAPPORT LOL");
         Map<String, String> map = new HashMap<String, String>();
         ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
@@ -27,7 +26,6 @@ public class MutantReport extends AbstractMojo {
         remplirDataGraph(res);
         genererOutPutHtml(res);
     }
-
 
     static public Map lireXML() {
         Map<String, Boolean> mutants = new HashMap<String, Boolean>(); //Couples mutant (string) et bool (true:killed et false:non killed)

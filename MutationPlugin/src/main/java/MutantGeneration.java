@@ -2,13 +2,12 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
-import processors.ReturnProcessor;
+import processors.GreaterEqualsProcessor;
 import spoon.Launcher;
 import spoon.SpoonModelBuilder;
 import spoon.processing.Processor;
 
 import java.io.File;
-import java.io.IOException;
 
 @Mojo(name = "generate")
 public class MutantGeneration extends AbstractMojo{
@@ -17,8 +16,9 @@ public class MutantGeneration extends AbstractMojo{
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         Launcher api = new Launcher();
-        Processor proc = new ReturnProcessor();
-        //Processor proc = new ReturnIntProcessor();
+
+//        Processor proc = new ReturnProcessor();
+        Processor proc = new GreaterEqualsProcessor();
 
         String mutantName = proc.getClass().getSimpleName();
         File mutantsRootPath = new File("target/spooned/");
