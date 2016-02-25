@@ -56,6 +56,7 @@ public class MutantGeneration extends AbstractMojo{
     public void execute() throws MojoExecutionException, MojoFailureException {
         Launcher api = new Launcher();
         Processor proc = new ReturnProcessor();
+        //Processor proc = new ReturnIntProcessor();
 
 
         File mutantProject = createMutantProject(proc);

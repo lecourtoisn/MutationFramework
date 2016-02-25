@@ -1,21 +1,17 @@
 package htmlgenerator;
 
-import java.io.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import java.util.regex.*;
-
-
-/**
- * Created by Lucas on 12/02/2016.
- */
 public class TestDom4J {
 
     static public Map lireXML() {
@@ -33,14 +29,18 @@ public class TestDom4J {
             for (int i=0; i<dir.length; i++)
             {
                 String[] mutantRep = new java.io.File("./output/ResultatsXml/"+dir[i]).list( );
-                boolean tue=true;
+                boolean tue=false;
                 for (int j=0; j<mutantRep.length; j++)
                 { //On parcourt les résultats des tests, classe par classe
                     final Document document = builder.parse(new File("./output/ResultatsXml/" + dir[i]+"/"+mutantRep[j]));
                     racine = document.getDocumentElement();
-                    if( !racine.getAttribute("failures").equals(racine.getAttribute("tests")))//si un test n'a pas fail
-                    	tue=false;
+                    //if( !racine.getAttribute("failures").equals(racine.getAttribute("tests")))//si un test n'a pas fail
+
+                    if (Integer.valueOf(racine.getAttribute("failures")) >= 1) {
+                        tue = true;
+                    }
                 }
+                System.out.println(tue);
                 mutants.put(dir[i], tue);
     	    }
         } catch (Exception e) {
