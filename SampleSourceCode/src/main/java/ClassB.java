@@ -6,4 +6,24 @@ public class ClassB {
     public String methodB() {
         return "Beurk pomme";
     }
+
+    public int methodC() {
+        return 1 - 1;
+    }
+
+    public int methodD() {
+        return 1 + 1;
+    }
+
+    public int methodE() {
+        return 2 * 3;
+    }
+
+    public int methodF() {
+        return 2 / 2;
+    }
+
+    public int methodG() {
+        return 2 % 2;
+    }
 }

@@ -6,7 +6,7 @@ import spoon.reflect.code.CtBinaryOperator;
 
 import java.util.ArrayList;
 
-public class GreaterEqualsProcessor extends AbstractProcessor<CtBinaryOperator<BinaryOperatorKind>> {
+public class LogicOperatorProcessor extends AbstractProcessor<CtBinaryOperator<BinaryOperatorKind>> {
 
 
     ArrayList<BinaryOperatorKind> listGenerated = generateList();
@@ -14,14 +14,12 @@ public class GreaterEqualsProcessor extends AbstractProcessor<CtBinaryOperator<B
 
     @Override
     public boolean isToBeProcessed(CtBinaryOperator<BinaryOperatorKind> candidate) {
-        //return candidate.getKind() == BinaryOperatorKind.GE;
         return candidate.getKind() == listTwo.get(0);
     }
 
     @Override
     public void process(CtBinaryOperator<BinaryOperatorKind> element) {
         if (isToBeProcessed(element)) {
-            //element.setKind(BinaryOperatorKind.EQ);
             element.setKind(listTwo.get(1));
         }
     }
@@ -30,12 +28,8 @@ public class GreaterEqualsProcessor extends AbstractProcessor<CtBinaryOperator<B
 
         ArrayList<BinaryOperatorKind> possibilityList = new ArrayList<BinaryOperatorKind>();
 
-        possibilityList.add(BinaryOperatorKind.GE);
-        possibilityList.add(BinaryOperatorKind.EQ);
-        possibilityList.add(BinaryOperatorKind.GT);
-        possibilityList.add(BinaryOperatorKind.LE);
-        possibilityList.add(BinaryOperatorKind.LT);
-        possibilityList.add(BinaryOperatorKind.NE);
+        possibilityList.add(BinaryOperatorKind.AND);
+        possibilityList.add(BinaryOperatorKind.OR);
 
         return possibilityList;
     }

@@ -17,4 +17,34 @@ public class ClassATest {
         ClassA a = new ClassA();
         assertTrue(a.methodB());
     }
+
+    @Test
+    public void testMethodC() throws Exception {
+        ClassA a = new ClassA();
+        assertTrue(a.methodC());
+    }
+
+    @Test
+    public void testMethodD() throws Exception {
+        ClassA a = new ClassA();
+        assertTrue(a.methodD());
+    }
+
+    @Test
+    public void testMethodE() throws Exception {
+        ClassA a = new ClassA();
+        assertTrue(a.methodE());
+    }
+
+    @Test
+    public void testMethodF() throws Exception {
+        ClassA a = new ClassA();
+        assertTrue(a.methodF());
+    }
+
+    @Test
+    public void testMethodG() throws Exception {
+        ClassA a = new ClassA();
+        assertTrue(a.methodG());
+    }
 }

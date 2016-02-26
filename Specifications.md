@@ -24,7 +24,7 @@ Nous avons établi une liste contenant un grand nombre de mutations sur différe
 
 #### Mutation sur les opérateurs de comparaison :
 
-  * >,<, >=, <=, ==
+  * >,<, >=, <=, ==, !=
   * .equals() , ==
 
 #### Mutation sur les opérateurs logiques :

@@ -3,6 +3,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import processors.GreaterEqualsProcessor;
+import processors.OperatorProcessor;
 import processors.ReturnProcessor;
 import spoon.Launcher;
 import spoon.SpoonModelBuilder;
@@ -18,7 +19,8 @@ public class MutantGeneration extends AbstractMojo{
     public void execute() throws MojoExecutionException, MojoFailureException {
         Processor processors[] = {
                 new GreaterEqualsProcessor(),
-                new ReturnProcessor()
+                new ReturnProcessor(),
+                new OperatorProcessor()
         };
 
 
