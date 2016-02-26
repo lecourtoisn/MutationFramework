@@ -10,7 +10,7 @@ public class ModifierProcessor extends AbstractProcessor<CtBinaryOperator<Modifi
 
 
     ArrayList<ModifierKind> listGenerated = generateList();
-    ArrayList<ModifierKind> listTwo = Util.choseTwoModifier(listGenerated);
+    ArrayList<ModifierKind> listTwo = Utils.choseTwoModifier(listGenerated);
 
     @Override
     public boolean isToBeProcessed(CtBinaryOperator<ModifierKind> candidate) {

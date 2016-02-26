@@ -10,7 +10,7 @@ public class OperatorProcessor extends AbstractProcessor<CtBinaryOperator<Binary
 
 
     ArrayList<BinaryOperatorKind> listGenerated = generateList();
-    ArrayList<BinaryOperatorKind> listTwo = Util.choseTwoBinaryOperator(listGenerated);
+    ArrayList<BinaryOperatorKind> listTwo = Utils.choseTwoBinaryOperator(listGenerated);
 
     @Override
     public boolean isToBeProcessed(CtBinaryOperator<BinaryOperatorKind> candidate) {
