@@ -4,12 +4,16 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.zeroturnaround.zip.ZipUtil;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +23,28 @@ public class MutantReport extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        copierTemplate();
+        if (1 == 1)
+            return;
         Map<String, String> map = new HashMap<String, String>();
         ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
         Map<String, Boolean> res=lireXML();
         remplirDataGraph(res);
         genererOutPutHtml(res);
+    }
+
+    private static void copierTemplate() {
+        String pathFromResources="Resultat-HTML.zip";
+        URL url=ClassLoader.getSystemResource(pathFromResources);
+        File resource = new File("src/main/resources/Resultat-HTML.zip");
+        System.out.println("Exist " + resource.exists());
+
+        if (url!=null) {
+            File template = new File(url.getPath());
+            ZipUtil.unpack(template, new File("./target"));
+        } else
+            System.out.println("ici");
     }
 
     static public Map lireXML() {
@@ -34,7 +54,7 @@ public class MutantReport extends AbstractMojo {
         Element racine = null;
 
         try {
-            //Création du parseur
+            //Crï¿½ation du parseur
             final DocumentBuilder builder = factory.newDocumentBuilder();
 
             String[] dir = new java.io.File("./target/spooned").list( );
@@ -42,7 +62,7 @@ public class MutantReport extends AbstractMojo {
             for (int i=0; i<dir.length; i++) {
                 String[] mutantRep = new java.io.File("./target/spooned/"+dir[i]+"/target/surefire-reports").list( );
                 boolean tue = false;
-                for (int j=0; j<mutantRep.length; j++) { //On parcourt les résultats des tests, classe par classe
+                for (int j=0; j<mutantRep.length; j++) { //On parcourt les rï¿½sultats des tests, classe par classe
                     if (mutantRep[j].endsWith(".xml")) {
 
                         final Document document = builder.parse(new File("./target/spooned/" + dir[i]+"/target/surefire-reports/"+mutantRep[j]));
@@ -61,7 +81,7 @@ public class MutantReport extends AbstractMojo {
     }
 
     static public void remplirDataGraph (Map<String, Boolean> mutants) {
-        String adressedufichier = "./Resultat-HTML/js/morris-data.js";
+        String adressedufichier = "./target/Resultat-HTML/js/morris-data.js";
         Map<Boolean, Integer> pourcentages= calculerPourcentage(mutants);
 
         try
@@ -86,11 +106,10 @@ public class MutantReport extends AbstractMojo {
         catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     static private Map calculerPourcentage(Map<String, Boolean> mutants){
-        Map<Boolean, Double> res=new HashMap(); //mutant non tués (false), pourcentage...
+        Map<Boolean, Double> res=new HashMap(); //mutant non tuï¿½s (false), pourcentage...
         int nbTot=mutants.size();//2
         int nbTues=0;
         for(Boolean b: mutants.values()){
@@ -104,7 +123,7 @@ public class MutantReport extends AbstractMojo {
 
     static public void genererOutPutHtml(Map<String, Boolean> mutants) {
 
-        String adressedufichier = "./Resultat-HTML/index.html";
+        String adressedufichier = "./target/Resultat-HTML/index.html";
 
         try
         {
