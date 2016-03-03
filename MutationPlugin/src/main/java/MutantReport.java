@@ -1,3 +1,5 @@
+import org.apache.commons.io.filefilter.PrefixFileFilter;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -8,15 +10,13 @@ import org.zeroturnaround.zip.ZipUtil;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Mojo(name = "report")
@@ -58,22 +58,49 @@ public class MutantReport extends AbstractMojo {
             //Cr�ation du parseur
             final DocumentBuilder builder = factory.newDocumentBuilder();
 
-            String[] dir = new java.io.File("./target/spooned").list( );
+            // Dir des spooned
+            //String[] dir = new java.io.File("./target/spooned").list( );
+            File dir = new File("./target/spooned");
+            File[] mutantProjects = dir.listFiles();
+            if (mutantProjects == null) {
+                throw new Exception("Le goal testing doit avoir été exécuté avant de générer le site web");
+            }
+            for (File mutantProject : mutantProjects) {
+                // Peut-être null si le repertoire n'éxiste pas
+                File xmlReportsDir = new File(mutantProject.getPath().concat("/target/surefire-reports"));
+                File[] xmlReports = xmlReportsDir.listFiles();
+                if (xmlReports == null) {
+                    throw new Exception("Pas de rapport à parser");
+                }
+                boolean tue = false;
+                for (File xmlReport : xmlReports) {
+                    System.out.println(xmlReport.getName());
+                    if (xmlReport.getName().endsWith(".xml")) {
+                        if (Integer.valueOf(racine.getAttribute("failures")) >= 1) {
+                            tue = true;
+                        }
+                        final Document document = builder.parse(xmlReport);
+                        racine = document.getDocumentElement();
+                        if (Integer.valueOf(racine.getAttribute("failures")) >= 1) {
+                            tue = true;
+                        }
+                    }
+                }
+            }
 
-            for (int i=0; i<dir.length; i++) {
+
+            // on les parcourt
+            /*for (int i=0; i<dir.length; i++) {
                 String[] mutantRep = new java.io.File("./target/spooned/"+dir[i]+"/target/surefire-reports").list( );
                 boolean tue = false;
-                    for (int j = 0; j < mutantRep.length; j++) { //On parcourt les r�sultats des tests, classe par classe
+                for (int j = 0; j < mutantRep.length; j++) { //On parcourt les r�sultats des tests, classe par classe
                         if (mutantRep[j].endsWith(".xml")) {
                             final Document document = builder.parse(new File("./target/spooned/" + dir[i] + "/target/surefire-reports/" + mutantRep[j]));
                             racine = document.getDocumentElement();
-                            if (Integer.valueOf(racine.getAttribute("failures")) >= 1) {
-                                tue = true;
-                            }
                         }
                     }
                     mutants.put(dir[i], tue);
-            }
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
         }
