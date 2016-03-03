@@ -5,26 +5,31 @@ import spoon.reflect.code.BinaryOperatorKind;
 import spoon.reflect.code.CtBinaryOperator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LogicOperatorProcessor extends AbstractProcessor<CtBinaryOperator<BinaryOperatorKind>> {
 
+    private BinaryOperatorKind b;
+    private BinaryOperatorKind a;
 
-    ArrayList<BinaryOperatorKind> listGenerated = generateList();
-    ArrayList<BinaryOperatorKind> listTwo = Utils.choseTwoBinaryOperator(listGenerated);
+    public LogicOperatorProcessor(BinaryOperatorKind a, BinaryOperatorKind b) {
+        this.a = a;
+        this.b = b;
+    }
 
     @Override
     public boolean isToBeProcessed(CtBinaryOperator<BinaryOperatorKind> candidate) {
-        return candidate.getKind() == listTwo.get(0);
+        return candidate.getKind() == a;
     }
 
     @Override
     public void process(CtBinaryOperator<BinaryOperatorKind> element) {
         if (isToBeProcessed(element)) {
-            element.setKind(listTwo.get(1));
+            element.setKind(b);
         }
     }
 
-    public ArrayList<BinaryOperatorKind> generateList () {
+    private static ArrayList<BinaryOperatorKind> generateList () {
 
         ArrayList<BinaryOperatorKind> possibilityList = new ArrayList<BinaryOperatorKind>();
 
@@ -32,6 +37,19 @@ public class LogicOperatorProcessor extends AbstractProcessor<CtBinaryOperator<B
         possibilityList.add(BinaryOperatorKind.OR);
 
         return possibilityList;
+    }
+
+    public static List<LogicOperatorProcessor> getEveryCouples() {
+
+        ArrayList<BinaryOperatorKind> possibilityList = generateList();
+
+        List<LogicOperatorProcessor> list = new ArrayList<LogicOperatorProcessor>();
+        for (BinaryOperatorKind a : possibilityList) {
+            for (BinaryOperatorKind b : possibilityList) {
+                list.add(new LogicOperatorProcessor(a, b));
+            }
+        }
+        return list;
     }
 
 }

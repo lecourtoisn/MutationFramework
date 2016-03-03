@@ -1,30 +1,37 @@
 package processors;
 
 import spoon.processing.AbstractProcessor;
-import spoon.reflect.code.CtBinaryOperator;
+import spoon.reflect.code.CtTypeAccess;
 import spoon.reflect.declaration.ModifierKind;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ModifierProcessor extends AbstractProcessor<CtBinaryOperator<ModifierKind>> {
+public class ModifierProcessor extends AbstractProcessor<CtTypeAccess<ModifierKind>> {
 
+    private ModifierKind b;
+    private ModifierKind a;
 
-    ArrayList<ModifierKind> listGenerated = generateList();
-    ArrayList<ModifierKind> listTwo = Utils.choseTwoModifier(listGenerated);
+    public ModifierProcessor(ModifierKind a, ModifierKind b) {
+        this.a = a;
+        this.b = b;
+    }
 
+    //CtTypeAccess
     @Override
-    public boolean isToBeProcessed(CtBinaryOperator<ModifierKind> candidate) {
+    public boolean isToBeProcessed(CtTypeAccess<ModifierKind> candidate) {
         return false;//candidate.getType() == listTwo.get(0); TODO
     }
 
+
     @Override
-    public void process(CtBinaryOperator<ModifierKind> element) {
+    public void process(CtTypeAccess<ModifierKind> element) {
         if (isToBeProcessed(element)) {
-            //element.setType(listTwo.get(1)); TODO
+            //element.setKind(b); TODO
         }
     }
 
-    public ArrayList<ModifierKind> generateList () {
+    private static ArrayList<ModifierKind> generateList () {
 
         ArrayList<ModifierKind> possibilityList = new ArrayList<ModifierKind>();
 
@@ -33,6 +40,19 @@ public class ModifierProcessor extends AbstractProcessor<CtBinaryOperator<Modifi
         possibilityList.add(ModifierKind.PROTECTED);
 
         return possibilityList;
+    }
+
+    public static List<ModifierProcessor> getEveryCouples() {
+
+        ArrayList<ModifierKind> possibilityList = generateList();
+
+        List<ModifierProcessor> list = new ArrayList<ModifierProcessor>();
+        for (ModifierKind a : possibilityList) {
+            for (ModifierKind b : possibilityList) {
+                list.add(new ModifierProcessor(a, b));
+            }
+        }
+        return list;
     }
 
 }

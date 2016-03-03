@@ -2,14 +2,14 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
-import processors.GreaterEqualsProcessor;
-import processors.OperatorProcessor;
-import processors.ReturnProcessor;
+import processors.*;
 import spoon.Launcher;
 import spoon.SpoonModelBuilder;
 import spoon.processing.Processor;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mojo(name = "generate")
 public class MutantGeneration extends AbstractMojo{
@@ -17,20 +17,22 @@ public class MutantGeneration extends AbstractMojo{
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        Processor processors[] = {
-                new GreaterEqualsProcessor(),
-                new ReturnProcessor(),
-                new OperatorProcessor()
-        };
 
+        List<Processor> processorList = new ArrayList<Processor>();
+        processorList.add(new ReturnProcessor());
+        //processorList.addAll(BinaryOperatorProcessor.getEveryCouples());
+        //processorList.addAll(OperatorProcessor.getEveryCouples());
+        processorList.addAll(LogicOperatorProcessor.getEveryCouples());
 
-        for (Processor proc : processors) {
+        int i =0;
+
+        for (Processor proc : processorList) {
             Launcher api = new Launcher();
 
             String mutantName = proc.getClass().getSimpleName();
             File mutantsRootPath = new File("target/spooned/");
 
-            File mutantProject = new File(mutantsRootPath.getPath().concat("/" + mutantName));
+            File mutantProject = new File(mutantsRootPath.getPath().concat("/" + mutantName + i));
 
             File mutantClasses = new File(mutantProject.getPath().concat("/target/classes"));
             File mutantSources = new File(mutantProject.getPath().concat("/src/main/java"));
@@ -50,6 +52,8 @@ public class MutantGeneration extends AbstractMojo{
             SpoonModelBuilder builder = api.getModelBuilder();
             // ... and compile them
             boolean compiled = builder.compile();
+
+            i++;
         }
     }
 }

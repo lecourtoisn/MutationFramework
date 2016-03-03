@@ -5,28 +5,33 @@ import spoon.reflect.code.BinaryOperatorKind;
 import spoon.reflect.code.CtBinaryOperator;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class GreaterEqualsProcessor extends AbstractProcessor<CtBinaryOperator<BinaryOperatorKind>> {
+public class BinaryOperatorProcessor extends AbstractProcessor<CtBinaryOperator<BinaryOperatorKind>> {
 
+    private BinaryOperatorKind b;
+    private BinaryOperatorKind a;
 
-    ArrayList<BinaryOperatorKind> listGenerated = generateList();
-    ArrayList<BinaryOperatorKind> listTwo = Utils.choseTwoBinaryOperator(listGenerated);
+    public BinaryOperatorProcessor(BinaryOperatorKind a, BinaryOperatorKind b) {
+        this.a = a;
+        this.b = b;
+    }
 
     @Override
     public boolean isToBeProcessed(CtBinaryOperator<BinaryOperatorKind> candidate) {
         //return candidate.getKind() == BinaryOperatorKind.GE;
-        return candidate.getKind() == listTwo.get(0);
+        return candidate.getKind() == a;
     }
 
     @Override
     public void process(CtBinaryOperator<BinaryOperatorKind> element) {
         if (isToBeProcessed(element)) {
             //element.setKind(BinaryOperatorKind.EQ);
-            element.setKind(listTwo.get(1));
+            element.setKind(b);
         }
     }
 
-    public ArrayList<BinaryOperatorKind> generateList () {
+    private static ArrayList<BinaryOperatorKind> generateList () {
 
         ArrayList<BinaryOperatorKind> possibilityList = new ArrayList<BinaryOperatorKind>();
 
@@ -38,6 +43,19 @@ public class GreaterEqualsProcessor extends AbstractProcessor<CtBinaryOperator<B
         possibilityList.add(BinaryOperatorKind.NE);
 
         return possibilityList;
+    }
+
+    public static List<BinaryOperatorProcessor> getEveryCouples() {
+
+        ArrayList<BinaryOperatorKind> possibilityList = generateList();
+
+        List<BinaryOperatorProcessor> list = new ArrayList<BinaryOperatorProcessor>();
+        for (BinaryOperatorKind a : possibilityList) {
+            for (BinaryOperatorKind b : possibilityList) {
+                list.add(new BinaryOperatorProcessor(a, b));
+            }
+        }
+        return list;
     }
 
 }
