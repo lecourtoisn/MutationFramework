@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,17 +63,16 @@ public class MutantReport extends AbstractMojo {
             for (int i=0; i<dir.length; i++) {
                 String[] mutantRep = new java.io.File("./target/spooned/"+dir[i]+"/target/surefire-reports").list( );
                 boolean tue = false;
-                for (int j=0; j<mutantRep.length; j++) { //On parcourt les r�sultats des tests, classe par classe
-                    if (mutantRep[j].endsWith(".xml")) {
-
-                        final Document document = builder.parse(new File("./target/spooned/" + dir[i]+"/target/surefire-reports/"+mutantRep[j]));
-                        racine = document.getDocumentElement();
-                        if (Integer.valueOf(racine.getAttribute("failures")) >= 1) {
-                            tue = true;
+                    for (int j = 0; j < mutantRep.length; j++) { //On parcourt les r�sultats des tests, classe par classe
+                        if (mutantRep[j].endsWith(".xml")) {
+                            final Document document = builder.parse(new File("./target/spooned/" + dir[i] + "/target/surefire-reports/" + mutantRep[j]));
+                            racine = document.getDocumentElement();
+                            if (Integer.valueOf(racine.getAttribute("failures")) >= 1) {
+                                tue = true;
+                            }
                         }
                     }
-                }
-                mutants.put(dir[i], tue);
+                    mutants.put(dir[i], tue);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,8 +115,11 @@ public class MutantReport extends AbstractMojo {
         for(Boolean b: mutants.values()){
             if(b) nbTues++;
         }
-        res.put(true, ((double)nbTues/(double)nbTot)*100);
-        res.put(false, ((double)(nbTot-nbTues)/(double)nbTot)*100);
+        DecimalFormat df = new DecimalFormat ( ) ;
+        df.setMaximumFractionDigits(2) ; //arrondi à 2 chiffres apres la virgules
+        df.setMinimumFractionDigits(2) ;
+        res.put(true,  Double.parseDouble(df.format(((double)nbTues/(double)nbTot)*100)));
+        res.put(false,  Double.parseDouble(df.format(((double)(nbTot-nbTues)/(double)nbTot)*100)));
         return res;
     }
 
