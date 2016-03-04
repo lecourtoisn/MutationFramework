@@ -58,4 +58,18 @@ public class BinaryOperatorProcessor extends AbstractProcessor<CtBinaryOperator<
         return list;
     }
 
+    public static List<BinaryOperatorProcessor> getSomeCouples(int nbCouples) {
+
+        ArrayList<BinaryOperatorKind> possibilityList = generateList();
+
+        List<BinaryOperatorProcessor> list = new ArrayList<BinaryOperatorProcessor>();
+        ArrayList<BinaryOperatorKind> listTwo;
+        for(int i = 0; i < nbCouples; i++) {
+            listTwo = Utils.choseTwoBinaryOperator(possibilityList);
+            list.add(new BinaryOperatorProcessor(listTwo.get(0), listTwo.get(1)));
+        }
+
+        return list;
+    }
+
 }
