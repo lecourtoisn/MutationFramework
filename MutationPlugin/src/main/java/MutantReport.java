@@ -1,3 +1,4 @@
+import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -8,10 +9,7 @@ import org.zeroturnaround.zip.ZipUtil;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.net.URL;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +19,10 @@ public class MutantReport extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        copierTemplate();
+        if (1 == 1)
+            return;
+
         Map<String, String> map = new HashMap<String, String>();
         ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
@@ -29,17 +31,24 @@ public class MutantReport extends AbstractMojo {
         genererOutPutHtml(res);
     }
 
+    public static void main(String[] args) {
+        copierTemplate();
+    }
     private static void copierTemplate() {
-        String pathFromResources="Resultat-HTML.zip";
-        URL url=ClassLoader.getSystemResource(pathFromResources);
-        File resource = new File("src/main/resources/Resultat-HTML.zip");
-        System.out.println("Exist " + resource.exists());
-
-        if (url!=null) {
-            File template = new File(url.getPath());
-            ZipUtil.unpack(template, new File("./target"));
-        } else
-            System.out.println("ici");
+        String resourceName="Resultat-HTML.zip";
+        //URL url=ClassLoader.getSystemResource(resourceName);
+        InputStream is = MutantReport.class.getResourceAsStream(resourceName);
+        try {
+            File target = new File("./target/" + resourceName);
+            OutputStream os = new FileOutputStream(target);
+            IOUtils.copy(is, os);
+            ZipUtil.unpack(target, new File("target"));
+            target.delete();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     static public Map lireXML() {
