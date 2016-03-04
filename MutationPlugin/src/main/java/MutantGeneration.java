@@ -6,6 +6,8 @@ import processors.*;
 import spoon.Launcher;
 import spoon.SpoonModelBuilder;
 import spoon.processing.Processor;
+import spoon.processing.ProcessorProperties;
+import spoon.support.processing.XmlProcessorProperties;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ public class MutantGeneration extends AbstractMojo{
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
 
-        List<Processor> processorList = new ArrayList<Processor>();
+        List<CustomProcessor> processorList = new ArrayList<CustomProcessor>();
         processorList.add(new ReturnProcessor());
         processorList.addAll(BinaryOperatorProcessor.getSomeCouples(5));
         processorList.addAll(OperatorProcessor.getSomeCouples(5));
@@ -26,7 +28,7 @@ public class MutantGeneration extends AbstractMojo{
 
         int i =0;
 
-        for (Processor proc : processorList) {
+        for (CustomProcessor proc : processorList) {
             Launcher api = new Launcher();
 
             String mutantName = proc.getClass().getSimpleName();
@@ -52,6 +54,8 @@ public class MutantGeneration extends AbstractMojo{
             SpoonModelBuilder builder = api.getModelBuilder();
             // ... and compile them
             boolean compiled = builder.compile();
+
+            proc.generateXml(mutantProject);
 
             i++;
         }

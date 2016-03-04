@@ -7,7 +7,7 @@ import spoon.reflect.code.CtBinaryOperator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogicOperatorProcessor extends AbstractProcessor<CtBinaryOperator<BinaryOperatorKind>> {
+public class LogicOperatorProcessor extends CustomProcessor<CtBinaryOperator<BinaryOperatorKind>>  {
 
     private BinaryOperatorKind b;
     private BinaryOperatorKind a;
@@ -50,6 +50,11 @@ public class LogicOperatorProcessor extends AbstractProcessor<CtBinaryOperator<B
             }
         }
         return list;
+    }
+
+    @Override
+    protected String getMutationID() {
+        return "Changes " + a + " to " + b;
     }
 
 }
