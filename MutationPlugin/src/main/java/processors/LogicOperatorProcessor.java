@@ -7,12 +7,13 @@ import spoon.reflect.code.CtBinaryOperator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogicOperatorProcessor extends AbstractProcessor<CtBinaryOperator<BinaryOperatorKind>> {
+public class LogicOperatorProcessor extends CustomProcessor<CtBinaryOperator<BinaryOperatorKind>>  {
 
     private BinaryOperatorKind b;
     private BinaryOperatorKind a;
 
     public LogicOperatorProcessor(BinaryOperatorKind a, BinaryOperatorKind b) {
+        super("Changes " + a + " to " + b);
         this.a = a;
         this.b = b;
     }
