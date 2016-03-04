@@ -20,8 +20,6 @@ public class MutantReport extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         copierTemplate();
-        if (1 == 1)
-            return;
 
         Map<String, String> map = new HashMap<String, String>();
         ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
@@ -85,7 +83,7 @@ public class MutantReport extends AbstractMojo {
     }
 
     static public void remplirDataGraph (Map<String, Boolean> mutants) {
-        String adressedufichier = "./Resultat-HTML/js/morris-data.js";
+        String adressedufichier = "./target/Resultat-HTML/js/morris-data.js";
         Map<Boolean, Integer> pourcentages= calculerPourcentage(mutants);
 
         try
@@ -128,7 +126,7 @@ public class MutantReport extends AbstractMojo {
 
     static public void genererOutPutHtml(Map<String, Boolean> mutants) {
 
-        String adressedufichier = "./Resultat-HTML/index.html";
+        String adressedufichier = "./target/Resultat-HTML/index.html";
 
         try
         {
