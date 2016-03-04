@@ -10,6 +10,7 @@ import org.zeroturnaround.zip.ZipUtil;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -118,8 +119,11 @@ public class MutantReport extends AbstractMojo {
         for(Boolean b: mutants.values()){
             if(b) nbTues++;
         }
-        res.put(true, ((double)nbTues/(double)nbTot)*100);
-        res.put(false, ((double)(nbTot-nbTues)/(double)nbTot)*100);
+        DecimalFormat df = new DecimalFormat ( ) ;
+        df.setMaximumFractionDigits(2) ; //arrondi à 2 chiffres apres la virgules
+        df.setMinimumFractionDigits(2) ;
+        res.put(true,  Double.parseDouble(df.format(((double)nbTues/(double)nbTot)*100)));
+        res.put(false,  Double.parseDouble(df.format(((double)(nbTot-nbTues)/(double)nbTot)*100)));
         return res;
     }
 
