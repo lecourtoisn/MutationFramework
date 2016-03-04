@@ -13,6 +13,7 @@ public class LogicOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bin
     private BinaryOperatorKind a;
 
     public LogicOperatorProcessor(BinaryOperatorKind a, BinaryOperatorKind b) {
+        super("Changes " + a + " to " + b);
         this.a = a;
         this.b = b;
     }
@@ -50,11 +51,6 @@ public class LogicOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bin
             }
         }
         return list;
-    }
-
-    @Override
-    protected String getMutationID() {
-        return "Changes " + a + " to " + b;
     }
 
 }

@@ -13,6 +13,7 @@ public class BinaryOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bi
     private BinaryOperatorKind a;
 
     public BinaryOperatorProcessor(BinaryOperatorKind a, BinaryOperatorKind b) {
+        super("Changes " + a + " to " + b);
         this.a = a;
         this.b = b;
     }
@@ -77,8 +78,5 @@ public class BinaryOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bi
         return list;
     }
 
-    @Override
-    protected String getMutationID() {
-        return "Changes " + a + " to " + b;
-    }
+
 }

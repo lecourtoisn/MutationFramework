@@ -8,6 +8,10 @@ import spoon.support.reflect.code.CtLiteralImpl;
 
 public class ReturnProcessor extends CustomProcessor<CtReturn<String>> {
 
+    public ReturnProcessor() {
+        super("String to 'Youpi banane'");
+    }
+
     @Override
     public boolean isToBeProcessed(CtReturn candidate) {
         return candidate.getReturnedExpression().getType().getActualClass().equals(String.class);
@@ -25,10 +29,5 @@ public class ReturnProcessor extends CustomProcessor<CtReturn<String>> {
 
         element.setReturnedExpression(newReturnValue);
 
-    }
-
-    @Override
-    protected String getMutationID() {
-        return "String to 'Youpi Banane'";
     }
 }
