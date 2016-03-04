@@ -59,6 +59,11 @@ public class OperatorProcessor extends CustomProcessor<CtBinaryOperator<BinaryOp
 
         ArrayList<BinaryOperatorKind> possibilityList = generateList();
 
+        //Pour ne pas dépacer le nombre de mutations disponnibles
+        if(nbCouples > generateList().size()*generateList().size()) {
+            nbCouples = generateList().size()*generateList().size();
+        }
+
         List<OperatorProcessor> list = new ArrayList<OperatorProcessor>();
         ArrayList<BinaryOperatorKind> listTwo;
         for(int i = 0; i < nbCouples; i++) {

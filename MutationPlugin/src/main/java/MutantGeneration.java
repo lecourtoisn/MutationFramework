@@ -22,8 +22,8 @@ public class MutantGeneration extends AbstractMojo{
 
         List<CustomProcessor> processorList = new ArrayList<CustomProcessor>();
         processorList.add(new ReturnProcessor());
-        processorList.addAll(BinaryOperatorProcessor.getSomeCouples(5));
-        processorList.addAll(OperatorProcessor.getSomeCouples(5));
+        processorList.addAll(BinaryOperatorProcessor.getSomeCouples(4));
+        processorList.addAll(OperatorProcessor.getSomeCouples(4));
         processorList.addAll(LogicOperatorProcessor.getEveryCouples());
 
         int i =0;
