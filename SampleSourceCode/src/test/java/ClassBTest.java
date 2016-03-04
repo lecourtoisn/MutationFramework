@@ -47,4 +47,16 @@ public class ClassBTest {
         ClassB a = new ClassB();
         assertEquals(a.methodG(), 0);
     }
+
+    @Test
+    public void testMethodH() throws Exception {
+        ClassB a = new ClassB();
+        assertEquals(a.methodH(), 1);
+    }
+
+    @Test
+    public void testMethodI() throws Exception {
+        ClassB a = new ClassB();
+        assertEquals(a.methodI(), 1);
+    }
 }
