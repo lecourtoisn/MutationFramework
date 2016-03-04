@@ -24,6 +24,13 @@
             <version>3.1</version>
         </dependency>
 
+        <!-- Dezipper -->
+        <dependency>
+            <groupId>org.zeroturnaround</groupId>
+            <artifactId>zt-zip</artifactId>
+            <version>1.9</version>
+        </dependency>
+
         <!-- Spoon core -->
         <dependency>
             <groupId>fr.inria.gforge.spoon</groupId>
