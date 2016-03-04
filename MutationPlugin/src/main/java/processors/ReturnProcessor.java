@@ -6,7 +6,7 @@ import spoon.reflect.code.CtReturn;
 import spoon.processing.AbstractProcessor;
 import spoon.support.reflect.code.CtLiteralImpl;
 
-public class ReturnProcessor extends AbstractProcessor<CtReturn<String>> {
+public class ReturnProcessor extends CustomProcessor<CtReturn<String>> {
 
     @Override
     public boolean isToBeProcessed(CtReturn candidate) {
@@ -25,5 +25,10 @@ public class ReturnProcessor extends AbstractProcessor<CtReturn<String>> {
 
         element.setReturnedExpression(newReturnValue);
 
+    }
+
+    @Override
+    protected String getMutationID() {
+        return "String to 'Youpi Banane'";
     }
 }

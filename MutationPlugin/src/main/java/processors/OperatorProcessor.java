@@ -7,7 +7,7 @@ import spoon.reflect.code.CtBinaryOperator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OperatorProcessor extends AbstractProcessor<CtBinaryOperator<BinaryOperatorKind>> {
+public class OperatorProcessor extends CustomProcessor<CtBinaryOperator<BinaryOperatorKind>>  {
 
     private BinaryOperatorKind b;
     private BinaryOperatorKind a;
@@ -53,6 +53,30 @@ public class OperatorProcessor extends AbstractProcessor<CtBinaryOperator<Binary
             }
         }
         return list;
+    }
+
+    public static List<OperatorProcessor> getSomeCouples(int nbCouples) {
+
+        ArrayList<BinaryOperatorKind> possibilityList = generateList();
+
+        //Pour ne pas dépacer le nombre de mutations disponnibles
+        if(nbCouples > generateList().size()*generateList().size()) {
+            nbCouples = generateList().size()*generateList().size();
+        }
+
+        List<OperatorProcessor> list = new ArrayList<OperatorProcessor>();
+        ArrayList<BinaryOperatorKind> listTwo;
+        for(int i = 0; i < nbCouples; i++) {
+            listTwo = Utils.choseTwoBinaryOperator(possibilityList);
+            list.add(new OperatorProcessor(listTwo.get(0), listTwo.get(1)));
+        }
+
+        return list;
+    }
+
+    @Override
+    protected String getMutationID() {
+        return "Changes " + a + " to " + b;
     }
 
 }
