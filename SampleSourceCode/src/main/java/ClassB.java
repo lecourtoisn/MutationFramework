@@ -26,4 +26,20 @@ public class ClassB {
     public int methodG() {
         return 2 % 2;
     }
+
+    public int methodH() {
+
+    if( 1 == 1 && 2 == 2) {
+        return 1;
+    }
+        return 2;
+    }
+
+    public int methodI() {
+
+        if( 1 == 1 || 2 == 2) {
+            return 1;
+        }
+        return 2;
+    }
 }
