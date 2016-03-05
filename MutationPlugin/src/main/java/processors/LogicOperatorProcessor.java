@@ -53,4 +53,22 @@ public class LogicOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bin
         return list;
     }
 
+    public static List<BinaryOperatorProcessor> getSomeCouples(int nbCouples) {
+
+        ArrayList<BinaryOperatorKind> possibilityList = generateList();
+
+        //Pour ne pas dépacer le nombre de mutations disponnibles
+        if(nbCouples > generateList().size()*generateList().size()) {
+            nbCouples = generateList().size()*generateList().size();
+        }
+
+        List<BinaryOperatorProcessor> list = new ArrayList<BinaryOperatorProcessor>();
+        ArrayList<BinaryOperatorKind> listTwo;
+        for(int i = 0; i < nbCouples; i++) {
+            listTwo = Utils.choseTwoBinaryOperator(possibilityList);
+            list.add(new BinaryOperatorProcessor(listTwo.get(0), listTwo.get(1)));
+        }
+
+        return list;
+    }
 }
