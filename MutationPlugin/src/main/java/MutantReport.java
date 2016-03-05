@@ -30,10 +30,10 @@ public class MutantReport extends AbstractMojo {
         genererOutPutHtml(res);
     }
 
-    public static void main(String[] args) {
-        copierTemplate();
-    }
-    private static void copierTemplate() {
+    /**
+     * Déplace le dossier template de rapport du plugin dans le projet et le dezipe
+     */
+    private void copierTemplate() {
         String resourceName="Resultat-HTML.zip";
 
         InputStream is = MutantReport.class.getResourceAsStream(resourceName);
@@ -50,7 +50,12 @@ public class MutantReport extends AbstractMojo {
         }
     }
 
-    static public Map lireXML() {
+    /**
+     * Lit les rapports de tests de JUnit et renvoie le résultat
+     * @return Map<Nom du mutant, bool true si tué (false sinon)>
+     *     TODO : Mutant mort nés
+     */
+     private Map lireXML() {
         Map<String, Boolean> mutants = new HashMap<String, Boolean>(); //Couples mutant (string) et bool (true:killed et false:non killed)
 
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -71,7 +76,7 @@ public class MutantReport extends AbstractMojo {
                 File xmlReportsDir = new File(mutantProject.getPath().concat("/target/surefire-reports"));
                 File[] xmlReports = xmlReportsDir.listFiles();
                 if (xmlReports == null) {
-                    throw new Exception("Pas de rapport à parser");
+                    throw new Exception("Pas de rapport à parser pour le mutant "+ mutantProject.getName());
                 }
                 boolean tue = false;
                 for (File xmlReport : xmlReports) {
@@ -91,7 +96,11 @@ public class MutantReport extends AbstractMojo {
         return mutants;
     }
 
-    static public void remplirDataGraph (Map<String, Boolean> mutants) {
+    /**
+     * Remplit les données pour l'affichage d'un diagramme dans le rapport
+     * @param mutants: Map contenant les informations sur les mutants (nom, tué/non tué)
+     */
+    private void remplirDataGraph (Map<String, Boolean> mutants) {
         String adressedufichier = "./target/Resultat-HTML/js/morris-data.js";
         Map<Boolean, Integer> pourcentages= calculerPourcentage(mutants);
 
@@ -120,7 +129,12 @@ public class MutantReport extends AbstractMojo {
 
     }
 
-    static private Map calculerPourcentage(Map<String, Boolean> mutants){
+    /**
+     * Calcul du pourcentage de mutants tués et non tués
+     * @param mutants Map contenant les informations sur les mutants (nom, tué/non tué)
+     * @return Map : (mutants tués (true), pourcentage de mutants tués) et (mutants non tués (false), pourcentage de mutants non tués)
+     */
+    private Map calculerPourcentage(Map<String, Boolean> mutants){
         Map<Boolean, Double> res=new HashMap(); //mutant non tu�s (false), pourcentage...
         int nbTot=mutants.size();//2
         int nbTues=0;
@@ -136,10 +150,12 @@ public class MutantReport extends AbstractMojo {
     }
 
 
-    static public void genererOutPutHtml(Map<String, Boolean> mutants) {
-
+    /**
+     * Remplit la page HTML de rapport
+     * @param mutants Map contenant les informations sur les mutants (nom, tué/non tué)
+     */
+    private void genererOutPutHtml(Map<String, Boolean> mutants) {
         String adressedufichier = "./target/Resultat-HTML/index.html";
-
         try
         {
             FileReader lireFichier= new FileReader(adressedufichier);
