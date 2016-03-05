@@ -8,6 +8,11 @@ import java.util.Random;
 
 public class Utils {
 
+    /**
+     * Retourne une liste avec deux mutations choisi aléatoirement dans la liste
+     * @param possibilityList
+     * @return liste de type BinaryOperatorKind
+     */
     public static ArrayList<BinaryOperatorKind> choseTwoBinaryOperator(ArrayList<BinaryOperatorKind> possibilityList ) {
 
         ArrayList<BinaryOperatorKind> listTwo = new ArrayList<BinaryOperatorKind>();
@@ -26,6 +31,11 @@ public class Utils {
         return listTwo;
     }
 
+    /**
+     * Retourne une liste avec deux mutations choisi aléatoirement dans la liste
+     * @param possibilityList
+     * @return liste de type ModifierKind
+     */
     public static ArrayList<ModifierKind> choseTwoModifier(ArrayList<ModifierKind> possibilityList ) {
 
         ArrayList<ModifierKind> listTwo = new ArrayList<ModifierKind>();

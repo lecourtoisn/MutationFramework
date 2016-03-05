@@ -12,6 +12,11 @@ public class ModifierProcessor extends AbstractProcessor<CtTypeAccess<ModifierKi
     private ModifierKind b;
     private ModifierKind a;
 
+    /**
+     * Constructeur, prend en paramètre deux operateurs de mutations
+     * @param a
+     * @param b
+     */
     public ModifierProcessor(ModifierKind a, ModifierKind b) {
         this.a = a;
         this.b = b;
@@ -31,6 +36,11 @@ public class ModifierProcessor extends AbstractProcessor<CtTypeAccess<ModifierKi
         }
     }
 
+
+    /**
+     * Liste de toutes les opérateurs possiblent
+     * @return
+     */
     private static ArrayList<ModifierKind> generateList () {
 
         ArrayList<ModifierKind> possibilityList = new ArrayList<ModifierKind>();
@@ -42,6 +52,10 @@ public class ModifierProcessor extends AbstractProcessor<CtTypeAccess<ModifierKi
         return possibilityList;
     }
 
+    /**
+     * Génére tout les couples possibles de mutations
+     * @return liste des mutants
+     */
     public static List<ModifierProcessor> getEveryCouples() {
 
         ArrayList<ModifierKind> possibilityList = generateList();
@@ -52,6 +66,30 @@ public class ModifierProcessor extends AbstractProcessor<CtTypeAccess<ModifierKi
                 list.add(new ModifierProcessor(a, b));
             }
         }
+        return list;
+    }
+
+    /**
+     * Génére le nombre de couples demandés de mutations
+     * @param nbCouples
+     * @return liste des mutants
+     */
+    public static List<ModifierProcessor> getSomeCouples(int nbCouples) {
+
+        ArrayList<ModifierKind> possibilityList = generateList();
+
+        //Pour ne pas dépacer le nombre de mutations disponnibles
+        if(nbCouples > generateList().size()*generateList().size()) {
+            nbCouples = generateList().size()*generateList().size();
+        }
+
+        List<ModifierProcessor> list = new ArrayList<ModifierProcessor>();
+        ArrayList<ModifierKind> listTwo;
+        for(int i = 0; i < nbCouples; i++) {
+            listTwo = Utils.choseTwoModifier(possibilityList);
+            list.add(new ModifierProcessor(listTwo.get(0), listTwo.get(1)));
+        }
+
         return list;
     }
 

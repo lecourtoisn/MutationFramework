@@ -12,6 +12,11 @@ public class BinaryOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bi
     private BinaryOperatorKind b;
     private BinaryOperatorKind a;
 
+    /**
+     * Constructeur, prend en paramètre deux operateurs de mutations
+     * @param a
+     * @param b
+     */
     public BinaryOperatorProcessor(BinaryOperatorKind a, BinaryOperatorKind b) {
         super("Changes " + a + " to " + b);
         this.a = a;
@@ -20,18 +25,20 @@ public class BinaryOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bi
 
     @Override
     public boolean isToBeProcessed(CtBinaryOperator<BinaryOperatorKind> candidate) {
-        //return candidate.getKind() == BinaryOperatorKind.GE;
         return candidate.getKind() == a;
     }
 
     @Override
     public void process(CtBinaryOperator<BinaryOperatorKind> element) {
         if (isToBeProcessed(element)) {
-            //element.setKind(BinaryOperatorKind.EQ);
             element.setKind(b);
         }
     }
 
+    /**
+     * Liste de toutes les opérateurs possiblent
+     * @return
+     */
     private static ArrayList<BinaryOperatorKind> generateList () {
 
         ArrayList<BinaryOperatorKind> possibilityList = new ArrayList<BinaryOperatorKind>();
@@ -46,6 +53,10 @@ public class BinaryOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bi
         return possibilityList;
     }
 
+    /**
+     * Génére tout les couples possibles de mutations
+     * @return liste des mutants
+     */
     public static List<BinaryOperatorProcessor> getEveryCouples() {
 
         ArrayList<BinaryOperatorKind> possibilityList = generateList();
@@ -59,6 +70,11 @@ public class BinaryOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bi
         return list;
     }
 
+    /**
+     * Génére le nombre de couples demandés de mutations
+     * @param nbCouples
+     * @return liste des mutants
+     */
     public static List<BinaryOperatorProcessor> getSomeCouples(int nbCouples) {
 
         ArrayList<BinaryOperatorKind> possibilityList = generateList();
