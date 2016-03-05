@@ -1,8 +1,10 @@
+import edu.emory.mathcs.backport.java.util.Collections;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.shared.invoker.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +16,10 @@ public class MutantTesting extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         File mutantRootPath = new File("target/spooned/");
         File compiledClassDir = new File("target/test-classes");
+        Invoker invoker = new DefaultInvoker();
+        InvocationRequest request = new DefaultInvocationRequest();
+        request.setGoals(Collections.singletonList("surefire:test"));
+
 
         File[] mutantsDirectories = mutantRootPath.listFiles();
         if (mutantsDirectories == null) {
@@ -21,44 +27,23 @@ public class MutantTesting extends AbstractMojo {
             return;
         }
         this.getLog().info("The mutants are being tested. This operation can take several minutes");
-        int nbOver = 0;
         for (File mutantDir : mutantsDirectories) {
             File spoonTestClassDir = new File(mutantDir.getPath().concat("/target/"));
             try {
                 FileUtils.copyDirectoryToDirectory(compiledClassDir, spoonTestClassDir);
                 FileUtils.copyFileToDirectory(new File("pom.xml"), mutantDir);
 
-                Runtime.getRuntime().exec("cmd.exe /C mvn surefire:test", null, mutantDir);
-                File surefireReports = new File(mutantDir.getPath().concat("/target/surefire-reports"));
-                while(!surefireReports.exists());
-                this.getLog().info(++nbOver + " mutant(s) out of " + mutantsDirectories.length + " have been tested");
+                request.setPomFile(new File(mutantDir.getPath().concat("/pom.xml")));
+                InvocationResult execute = invoker.execute(request);
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (MavenInvocationException e) {
+                this.getLog().error("Couldn't run surefire for test : " + mutantDir.getName());
                 e.printStackTrace();
             }
         }
         //checkSfOver(mutantsDirectories);
         this.getLog().info("Testing over");
 
-    }
-
-    private void checkSfOver(File[] mutantsDirectories) {
-        int nbOver = 0;
-        do {
-            int ct = countOver(mutantsDirectories);
-            if (ct != nbOver) {
-                nbOver = ct;
-                this.getLog().info(nbOver + " mutant(s) out of " + mutantsDirectories.length + " have been tested");
-            }
-        } while (nbOver < mutantsDirectories.length);
-    }
-
-    private int countOver(File[] mutantsDirectories) {
-        int ct = 0;
-        for (File mutantDir : mutantsDirectories) {
-            if (new File(mutantDir.getPath().concat("/target/surefire-reports")).exists()) {
-                ++ct;
-            }
-        }
-        return ct;
     }
 }
