@@ -20,6 +20,8 @@ public class MutantTesting extends AbstractMojo {
             System.out.println("No mutants to test");
             return;
         }
+        this.getLog().info("The mutants are being tested. This operation can take several minutes");
+        int nbOver = 0;
         for (File mutantDir : mutantsDirectories) {
             File spoonTestClassDir = new File(mutantDir.getPath().concat("/target/"));
             try {
@@ -27,13 +29,14 @@ public class MutantTesting extends AbstractMojo {
                 FileUtils.copyFileToDirectory(new File("pom.xml"), mutantDir);
 
                 Runtime.getRuntime().exec("cmd.exe /C mvn surefire:test", null, mutantDir);
+                File surefireReports = new File(mutantDir.getPath().concat("/target/surefire-reports"));
+                while(!surefireReports.exists());
+                this.getLog().info(++nbOver + " mutant(s) out of " + mutantsDirectories.length + " have been tested");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        this.getLog().info("The mutants are being tested. This operation can take several minutes");
-        checkSfOver(mutantsDirectories);
+        //checkSfOver(mutantsDirectories);
         this.getLog().info("Testing over");
 
     }
