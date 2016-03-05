@@ -42,6 +42,7 @@ public class MutantReport extends AbstractMojo {
             OutputStream os = new FileOutputStream(target);
             IOUtils.copy(is, os);
             ZipUtil.unpack(target, new File("target"));
+            is.close(); os.close();
             target.delete();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
