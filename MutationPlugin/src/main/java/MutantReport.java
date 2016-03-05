@@ -199,12 +199,13 @@ public class MutantReport extends AbstractMojo {
             String[] s=ligne.split("<!--Debut des details-->");
             String nouveauContenu=s[0]+"<!--Debut des details-->";
             for(String nomMutant: mutants.keySet()){
+
                 if(mutants.get(nomMutant)){
                     nouveauContenu+="<div class=\"col-lg-8\"> <div class=\"panel panel-success\"> <div class=\"panel-heading\">Mutant tue </div><div class=\"panel-body\">";
-                    nouveauContenu+=("<p>Mutation: "+ nomMutant +"</p> </div> </div> </div>");
+                    nouveauContenu+=("<p>Mutation: "+ nomMutant +" ("+ mutations.get(nomMutant).split("=>")[1] +" ) </p> </div> </div> </div>");
                 } else {
                     nouveauContenu+="<div class=\"col-lg-8\"> <div class=\"panel panel-danger\"> <div class=\"panel-heading\">Mutant non tue </div><div class=\"panel-body\">";
-                    nouveauContenu+=("<p>Mutation: "+ nomMutant +"</p> </div> </div> </div>");
+                    nouveauContenu+=("<p>Mutation: "+ nomMutant +" ("+ mutations.get(nomMutant).split("=>")[1] +" ) </p> </div> </div> </div>");
                 }
             }
             nouveauContenu+="<!--Fin des details-->";
