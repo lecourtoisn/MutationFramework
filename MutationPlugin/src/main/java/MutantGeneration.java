@@ -5,9 +5,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import processors.*;
 import spoon.Launcher;
 import spoon.SpoonModelBuilder;
-import spoon.processing.Processor;
-import spoon.processing.ProcessorProperties;
-import spoon.support.processing.XmlProcessorProperties;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,12 +19,13 @@ public class MutantGeneration extends AbstractMojo{
 
         //Liste des différentes mutations
         List<CustomProcessor> processorList = new ArrayList<CustomProcessor>();
+        processorList.add(new RemoveConstructorProcessor());
         processorList.add(new ReturnProcessor());
         processorList.addAll(LogicOperatorProcessor.getSomeCouples(2));
         processorList.addAll(BinaryOperatorProcessor.getSomeCouples(4));
         processorList.addAll(OperatorProcessor.getSomeCouples(4));
 
-        int i =0;
+        int i = 0;
 
         for (CustomProcessor proc : processorList) {
             Launcher api = new Launcher();
@@ -54,9 +52,17 @@ public class MutantGeneration extends AbstractMojo{
 
             SpoonModelBuilder builder = api.getModelBuilder();
             // ... and compile them
-            boolean compiled = builder.compile();
 
-            proc.generateXml(mutantProject);
+
+            boolean compiled = false;
+            try {
+                compiled = builder.compile();
+            } catch (Exception e) {
+                this.getLog().error("Uncompiled mutant : " + mutantName);
+                e.printStackTrace();
+            }
+
+            proc.generateXml(mutantProject, compiled);
 
             i++;
         }

@@ -26,7 +26,6 @@ public class ReturnProcessor extends CustomProcessor<CtReturn<String>> {
 
         CtLiteralImpl<String> newReturnValue = new CtLiteralImpl<String>();
         newReturnValue.setValue("Youpi banane");
-
         element.setReturnedExpression(newReturnValue);
 
     }

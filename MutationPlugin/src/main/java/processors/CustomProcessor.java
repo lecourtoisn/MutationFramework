@@ -18,8 +18,9 @@ public abstract class CustomProcessor<E extends CtElement> extends AbstractProce
     /**
      * Génére un xml contenant la mutation appliquée
      * @param target
+     * @param compiled
      */
-    public void generateXml(File target) {
+    public void generateXml(File target, boolean compiled) {
         String mutationIdentifier = this.getClass() + " => " + getMutationID();
 
         String adressedufichier = target.getPath().concat("/coupleOutput.xml");
@@ -29,7 +30,10 @@ public abstract class CustomProcessor<E extends CtElement> extends AbstractProce
             BufferedWriter output = new BufferedWriter(fw);
 
             output.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            output.write("<mutation>"+mutationIdentifier+"</mutation>\n");
+            output.write("<info>\n");
+            output.write("\t<mutation>"+mutationIdentifier+"</mutation>\n");
+            output.write("\t<compiled>"+compiled+"</compiled>\n");
+            output.write("</info>\n");
 
             output.flush();
             output.close();
