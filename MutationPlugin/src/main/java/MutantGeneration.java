@@ -20,12 +20,12 @@ public class MutantGeneration extends AbstractMojo{
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
 
-        //Liste des différentes mutations
+        //Liste des diffï¿½rentes mutations
         List<CustomProcessor> processorList = new ArrayList<CustomProcessor>();
         processorList.add(new ReturnProcessor());
         processorList.addAll(LogicOperatorProcessor.getSomeCouples(2));
-        processorList.addAll(BinaryOperatorProcessor.getSomeCouples(4));
-        processorList.addAll(OperatorProcessor.getSomeCouples(4));
+       // processorList.addAll(BinaryOperatorProcessor.getSomeCouples(4));
+        //processorList.addAll(OperatorProcessor.getSomeCouples(4));
 
         int i =0;
 

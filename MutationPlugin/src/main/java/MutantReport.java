@@ -18,7 +18,8 @@ import java.util.Map;
 @Mojo(name = "report")
 public class MutantReport extends AbstractMojo {
     private Map<String, Integer> testsTueurs; //nombre de mutant tué pour chaque classe de tests
-
+    private Map<String, String> mutations; //Noms et mutation pour chaque mutant
+    private int nbMortNes;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -61,6 +62,7 @@ public class MutantReport extends AbstractMojo {
      private Map lireXML() {
         Map<String, Boolean> mutants = new HashMap<String, Boolean>(); //Couples mutant (string) et bool (true:killed et false:non killed)
         testsTueurs= new HashMap<String, Integer>();
+        mutations= new HashMap<String, String>();
 
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         Element racine = null;
@@ -75,8 +77,17 @@ public class MutantReport extends AbstractMojo {
             if (mutantProjects == null) {
                 throw new Exception("Le goal testing doit avoir été exécuté avant de générer le site web");
             }
-            for (File mutantProject : mutantProjects) {
-                // Peut-être null si le repertoire n'existe pas
+            for (File mutantProject : mutantProjects) {//Pour chaque mutant
+                //On lit les information (descripitons et si mort né) sur le mutant
+                final Document infoDoc = builder.parse(mutantProject.getPath().concat("/coupleOutput.xml"));
+                mutations.put(mutantProject.getName(),infoDoc.getDocumentElement().getChildNodes().item(1).getTextContent());
+                if(infoDoc.getDocumentElement().getChildNodes().item(3).getTextContent().equals("false")){
+                    System.out.println("UN MORT NE");
+                    nbMortNes++;
+                }
+
+
+                //On regarde s'il a été tué
                 File xmlReportsDir = new File(mutantProject.getPath().concat("/target/surefire-reports"));
                 File[] xmlReports = xmlReportsDir.listFiles();
                 if (xmlReports == null) {
@@ -94,7 +105,6 @@ public class MutantReport extends AbstractMojo {
                             if (temp!=null) temp++;
                             else temp=1;
                             testsTueurs.put(nom,temp);
-                            System.out.println(nom+ " a tué "+temp);
                         }
                     }
                 }
@@ -135,10 +145,7 @@ public class MutantReport extends AbstractMojo {
             for (String classTest: testsTueurs.keySet()){
                 dataTestTueurs+= "{ nom: '"+ classTest + "', nb: " + testsTueurs.get(classTest)+"},";
             }
-            System.out.println("LLLLLLLLAAAAAAAAAAAAAAAA");
-            if (l3.contains("//debut datas")) System.out.println("OOOOOOUUUUUUIIIIII");
             l3= l3.replace("//debut datas", dataTestTueurs);
-            System.out.println(l3);
 
             //Ecriture des résultats
             FileWriter ecrireFichier = new FileWriter(adressedufichier, false);
