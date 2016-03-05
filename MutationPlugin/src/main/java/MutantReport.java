@@ -78,7 +78,6 @@ public class MutantReport extends AbstractMojo {
                 throw new Exception("Le goal testing doit avoir été exécuté avant de générer le site web");
             }
             for (File mutantProject : mutantProjects) {//Pour chaque mutant
-                System.out.println("JE PARCOURS LE MUTANT" + mutantProject.getName());
                 //On lit les information (descripitons et si mort né) sur le mutant
                 final Document infoDoc = builder.parse(mutantProject.getPath().concat("/coupleOutput.xml"));
                 mutations.put(mutantProject.getName(),infoDoc.getDocumentElement().getChildNodes().item(1).getTextContent());
