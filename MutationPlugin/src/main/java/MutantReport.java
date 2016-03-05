@@ -17,6 +17,8 @@ import java.util.Map;
 
 @Mojo(name = "report")
 public class MutantReport extends AbstractMojo {
+    private Map<String, Integer> testsTueurs; //nombre de mutant tué pour chaque classe de tests
+
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -58,6 +60,7 @@ public class MutantReport extends AbstractMojo {
      */
      private Map lireXML() {
         Map<String, Boolean> mutants = new HashMap<String, Boolean>(); //Couples mutant (string) et bool (true:killed et false:non killed)
+        testsTueurs= new HashMap<String, Integer>();
 
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         Element racine = null;
@@ -86,6 +89,12 @@ public class MutantReport extends AbstractMojo {
                         racine = document.getDocumentElement();
                         if (Integer.valueOf(racine.getAttribute("failures")) >= 1) {
                             tue = true;
+                            String nom= xmlReport.getName().substring(5).replace(".xml", "");
+                            Integer temp = testsTueurs.get(nom);
+                            if (temp!=null) temp++;
+                            else temp=1;
+                            testsTueurs.put(nom,temp);
+                            System.out.println(nom+ " a tué "+temp);
                         }
                     }
                 }
@@ -114,11 +123,24 @@ public class MutantReport extends AbstractMojo {
             while((i = lireFichier.read()) != -1){
                 ligne += (char)i;
             }
+
+            //Changements pour le 1er diagramme
             String nouvelleString="value: " + pourcentages.get(true) +", label: 'Mutants tues'";
             String l2= ligne.replaceAll("value: (\\d*).(\\d*), label: 'Mutants tues'", nouvelleString);
             String nouvelleString2="value: " + pourcentages.get(false) +", label: 'Mutants non tues'";
             String l3= l2.replaceAll("value: (\\d*).(\\d*), label: 'Mutants non tues'", nouvelleString2);
 
+            //Changements pour le 2eme diagramme
+            String dataTestTueurs="";
+            for (String classTest: testsTueurs.keySet()){
+                dataTestTueurs+= "{ nom: '"+ classTest + "', nb: " + testsTueurs.get(classTest)+"},";
+            }
+            System.out.println("LLLLLLLLAAAAAAAAAAAAAAAA");
+            if (l3.contains("//debut datas")) System.out.println("OOOOOOUUUUUUIIIIII");
+            l3= l3.replace("//debut datas", dataTestTueurs);
+            System.out.println(l3);
+
+            //Ecriture des résultats
             FileWriter ecrireFichier = new FileWriter(adressedufichier, false);
             ecrireFichier.write(l3);
             // "Fermeture" du FileWriter
