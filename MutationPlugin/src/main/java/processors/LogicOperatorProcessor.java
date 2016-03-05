@@ -12,6 +12,11 @@ public class LogicOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bin
     private BinaryOperatorKind b;
     private BinaryOperatorKind a;
 
+    /**
+     * Constructeur, prend en paramètre deux operateurs de mutations
+     * @param a
+     * @param b
+     */
     public LogicOperatorProcessor(BinaryOperatorKind a, BinaryOperatorKind b) {
         super("Changes " + a + " to " + b);
         this.a = a;
@@ -30,6 +35,11 @@ public class LogicOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bin
         }
     }
 
+
+    /**
+     * Liste de toutes les opérateurs possiblent
+     * @return
+     */
     private static ArrayList<BinaryOperatorKind> generateList () {
 
         ArrayList<BinaryOperatorKind> possibilityList = new ArrayList<BinaryOperatorKind>();
@@ -40,6 +50,10 @@ public class LogicOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bin
         return possibilityList;
     }
 
+    /**
+     * Génére tout les couples possibles de mutations
+     * @return liste des mutants
+     */
     public static List<LogicOperatorProcessor> getEveryCouples() {
 
         ArrayList<BinaryOperatorKind> possibilityList = generateList();
@@ -53,6 +67,11 @@ public class LogicOperatorProcessor extends CustomProcessor<CtBinaryOperator<Bin
         return list;
     }
 
+    /**
+     * Génére le nombre de couples demandés de mutations
+     * @param nbCouples
+     * @return liste des mutants
+     */
     public static List<LogicOperatorProcessor> getSomeCouples(int nbCouples) {
 
         ArrayList<BinaryOperatorKind> possibilityList = generateList();

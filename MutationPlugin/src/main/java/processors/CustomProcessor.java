@@ -15,6 +15,10 @@ public abstract class CustomProcessor<E extends CtElement> extends AbstractProce
         this.mutationID = mutationID;
     }
 
+    /**
+     * Génére un xml contenant la mutation appliquée
+     * @param target
+     */
     public void generateXml(File target) {
         String mutationIdentifier = this.getClass() + " => " + getMutationID();
 
