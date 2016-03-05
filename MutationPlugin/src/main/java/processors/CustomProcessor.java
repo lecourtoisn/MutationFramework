@@ -9,6 +9,12 @@ import java.io.FileWriter;
 
 public abstract class CustomProcessor<E extends CtElement> extends AbstractProcessor<E> {
 
+    private String mutationID;
+
+    public CustomProcessor(String mutationID) {
+        this.mutationID = mutationID;
+    }
+
     public void generateXml(File target) {
         String mutationIdentifier = this.getClass() + " => " + getMutationID();
 
@@ -29,5 +35,7 @@ public abstract class CustomProcessor<E extends CtElement> extends AbstractProce
         }
     }
 
-    protected abstract String getMutationID();
+    protected final String getMutationID() {
+        return mutationID;
+    }
 }
