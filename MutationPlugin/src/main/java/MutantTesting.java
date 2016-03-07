@@ -36,10 +36,10 @@ public class MutantTesting extends AbstractMojo {
 
                 request.setPomFile(new File(mutantDir.getPath().concat("/pom.xml")));
                 invoker.setOutputHandler(null);
-                this.getLog().info("Mutant being tested : " + mutantDir.getName() + ", " + --mutantTotal + " remaining");
+                this.getLog().info("Mutant being tested : " + mutantDir.getName());
                 InvocationResult execute = invoker.execute(request);
                 String testResult = execute.getExitCode() == 0 ? "failed" : "succeed";
-                this.getLog().info("\tTests " + testResult);
+                this.getLog().info("\tTests " + testResult + ", " + --mutantTotal + " remaining");
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (MavenInvocationException e) {
