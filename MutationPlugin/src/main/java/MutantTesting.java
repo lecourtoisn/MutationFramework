@@ -27,6 +27,7 @@ public class MutantTesting extends AbstractMojo {
             return;
         }
         this.getLog().info("The mutants are being tested. This operation can take several minutes");
+        int mutantTotal = mutantsDirectories.length;
         for (File mutantDir : mutantsDirectories) {
             File spoonTestClassDir = new File(mutantDir.getPath().concat("/target/"));
             try {
@@ -34,7 +35,11 @@ public class MutantTesting extends AbstractMojo {
                 FileUtils.copyFileToDirectory(new File("pom.xml"), mutantDir);
 
                 request.setPomFile(new File(mutantDir.getPath().concat("/pom.xml")));
+                invoker.setOutputHandler(null);
+                this.getLog().info("Mutant being tested : " + mutantDir.getName() + ", " + --mutantTotal + " remaining");
                 InvocationResult execute = invoker.execute(request);
+                String testResult = execute.getExitCode() == 0 ? "failed" : "succeed";
+                this.getLog().info("\tTests " + testResult);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (MavenInvocationException e) {
@@ -42,8 +47,7 @@ public class MutantTesting extends AbstractMojo {
                 e.printStackTrace();
             }
         }
-        //checkSfOver(mutantsDirectories);
-        this.getLog().info("Testing over");
+        this.getLog().info("Testing done");
 
     }
 }
