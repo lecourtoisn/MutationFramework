@@ -6,7 +6,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.zeroturnaround.zip.ZipUtil;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
@@ -31,6 +30,8 @@ public class MutantReport extends AbstractMojo {
         Map<String, Boolean> res=lireXML();
         remplirDataGraph(res);
         genererOutPutHtml(res);
+        //System.out.println("Result of the mutation testing: " + System.getProperty("user.dir") + "\\target\\Resultat-HTML\\index.html");
+        this.getLog().info("==> Result of the mutation testing: " + System.getProperty("user.dir") + "\\target\\Resultat-HTML\\index.html");
     }
 
     /**
