@@ -2,6 +2,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import processors.*;
 import spoon.Launcher;
 import spoon.SpoonModelBuilder;
@@ -15,17 +16,31 @@ import java.util.List;
 public class MutantGeneration extends AbstractMojo{
 
 
+    @Parameter
+    private int binaryOperator;
+
+    @Parameter
+    private int logicOperator;
+
+    @Parameter
+    private int modifier;
+
+    @Parameter
+    private int operator;
+
+    @Parameter
+    private boolean myReturn;
+
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-
         //Liste des diff�rentes mutations
         List<CustomProcessor> processorList = new ArrayList<CustomProcessor>();
         //processorList.add(new RemoveConstructorProcessor());
-        processorList.add(new ReturnProcessor());
-        /*processorList.addAll(LogicOperatorProcessor.getSomeCouples(2));
-        processorList.addAll(BinaryOperatorProcessor.getSomeCouples(4));
-        processorList.addAll(OperatorProcessor.getSomeCouples(4));*/
-        processorList.addAll(ModifierProcessor.getSomeCouples(4));
+        processorList.addAll(LogicOperatorProcessor.getSomeCouples(logicOperator));
+        processorList.addAll(BinaryOperatorProcessor.getSomeCouples(binaryOperator));
+        processorList.addAll(OperatorProcessor.getSomeCouples(operator));
+        processorList.addAll(ModifierProcessor.getSomeCouples(modifier));
+        if (myReturn) processorList.add(new ReturnProcessor());
 
         int i = 0;
 

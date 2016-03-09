@@ -31,6 +31,13 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                        <configuration>
+                            <binaryOperator>4</binaryOperator>
+                            <logicOperator>2</logicOperator>
+                            <modifier>4</modifier>
+                            <operator>4</operator>
+                            <myReturn>true</myReturn>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>Testing mutants</id>
