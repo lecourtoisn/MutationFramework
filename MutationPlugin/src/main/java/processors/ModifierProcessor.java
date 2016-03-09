@@ -1,13 +1,15 @@
 package processors;
 
-import spoon.processing.AbstractProcessor;
-import spoon.reflect.code.CtTypeAccess;
+import spoon.reflect.declaration.CtModifiable;
 import spoon.reflect.declaration.ModifierKind;
+import spoon.support.reflect.declaration.CtFieldImpl;
+import spoon.support.reflect.declaration.CtMethodImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-public class ModifierProcessor extends AbstractProcessor<CtTypeAccess<ModifierKind>> {
+public class ModifierProcessor extends CustomProcessor<CtModifiable> {
 
     private ModifierKind b;
     private ModifierKind a;
@@ -18,24 +20,28 @@ public class ModifierProcessor extends AbstractProcessor<CtTypeAccess<ModifierKi
      * @param b
      */
     public ModifierProcessor(ModifierKind a, ModifierKind b) {
+        super("Remplace les " + a + " en " + b);
         this.a = a;
         this.b = b;
     }
 
-    //CtTypeAccess
+    /**
+     * Return true if the candidate is a method or a field and it contains the modifier to replace
+     * @param candidate
+     */
     @Override
-    public boolean isToBeProcessed(CtTypeAccess<ModifierKind> candidate) {
-        return false;//candidate.getType() == listTwo.get(0); TODO
+    public boolean isToBeProcessed(CtModifiable candidate) {
+        return (candidate instanceof CtMethodImpl || candidate instanceof CtFieldImpl) && candidate.getModifiers().contains(a);
     }
 
-
     @Override
-    public void process(CtTypeAccess<ModifierKind> element) {
+    public void process(CtModifiable element) {
         if (isToBeProcessed(element)) {
-            //element.setKind(b); TODO
+            Set<ModifierKind> modifiers = element.getModifiers();
+            modifiers.remove(a);
+            modifiers.add(b);
         }
     }
-
 
     /**
      * Liste de toutes les opérateurs possiblent
@@ -63,7 +69,7 @@ public class ModifierProcessor extends AbstractProcessor<CtTypeAccess<ModifierKi
         List<ModifierProcessor> list = new ArrayList<ModifierProcessor>();
         for (ModifierKind a : possibilityList) {
             for (ModifierKind b : possibilityList) {
-                list.add(new ModifierProcessor(a, b));
+                //list.add(new ModifierProcessor(a, b));
             }
         }
         return list;

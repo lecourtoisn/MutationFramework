@@ -6,7 +6,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.zeroturnaround.zip.ZipUtil;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
@@ -31,6 +30,8 @@ public class MutantReport extends AbstractMojo {
         Map<String, Boolean> res=lireXML();
         remplirDataGraph(res);
         genererOutPutHtml(res);
+        //System.out.println("Result of the mutation testing: " + System.getProperty("user.dir") + "\\target\\Resultat-HTML\\index.html");
+        this.getLog().info("==> Result of the mutation testing: " + System.getProperty("user.dir") + "\\target\\Resultat-HTML\\index.html");
     }
 
     /**
@@ -75,7 +76,7 @@ public class MutantReport extends AbstractMojo {
             File dir = new File("./target/spooned");
             File[] mutantProjects = dir.listFiles();
             if (mutantProjects == null) {
-                throw new Exception("Le goal testing doit avoir été exécuté avant de générer le site web");
+                throw new Exception("Goal testing has to be done before making the report.");
             }
             for (File mutantProject : mutantProjects) {//Pour chaque mutant
                 //On lit les information (descripitons et si mort né) sur le mutant
@@ -88,7 +89,7 @@ public class MutantReport extends AbstractMojo {
                     File xmlReportsDir = new File(mutantProject.getPath().concat("/target/surefire-reports"));
                     File[] xmlReports = xmlReportsDir.listFiles();
                     if (xmlReports == null) {
-                        throw new Exception("Pas de rapport à parser pour le mutant " + mutantProject.getName());
+                        throw new Exception("No report to parse for the mutant " + mutantProject.getName());
                     }
                     boolean tue = false;
                     for (File xmlReport : xmlReports) {
@@ -155,7 +156,6 @@ public class MutantReport extends AbstractMojo {
         catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
