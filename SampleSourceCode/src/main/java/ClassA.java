@@ -1,4 +1,9 @@
 public class ClassA {
+
+    private int a;
+    public long b;
+    protected boolean c;
+
     public String methodA() {
         return "Beurk goyave";
     }
@@ -26,4 +31,5 @@ public class ClassA {
     public boolean methodG() {
         return 2 != 3;
     }
+
 }
