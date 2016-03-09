@@ -5,6 +5,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import processors.*;
 import spoon.Launcher;
 import spoon.SpoonModelBuilder;
+import spoon.reflect.declaration.ModifierKind;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,11 +20,12 @@ public class MutantGeneration extends AbstractMojo{
 
         //Liste des diff�rentes mutations
         List<CustomProcessor> processorList = new ArrayList<CustomProcessor>();
-        processorList.add(new RemoveConstructorProcessor());
-        //processorList.add(new ReturnProcessor());
-        processorList.addAll(LogicOperatorProcessor.getSomeCouples(2));
+        //processorList.add(new RemoveConstructorProcessor());
+        processorList.add(new ReturnProcessor());
+        /*processorList.addAll(LogicOperatorProcessor.getSomeCouples(2));
         processorList.addAll(BinaryOperatorProcessor.getSomeCouples(4));
-        processorList.addAll(OperatorProcessor.getSomeCouples(4));
+        processorList.addAll(OperatorProcessor.getSomeCouples(4));*/
+        processorList.addAll(ModifierProcessor.getSomeCouples(4));
 
         int i = 0;
 
@@ -47,10 +49,11 @@ public class MutantGeneration extends AbstractMojo{
             api.setSourceOutputDirectory(mutantSources.getPath());
             api.setBinaryOutputDirectory(mutantClasses.getPath());
 
-            // Spoon runs and generate the new sources ...
+            // Spoon runs and generate the new sources
             api.run();
 
             SpoonModelBuilder builder = api.getModelBuilder();
+
             // ... and compile them
 
 
