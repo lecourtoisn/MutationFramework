@@ -1,15 +1,12 @@
 package processors;
 
-import spoon.reflect.code.CtExpression;
 import spoon.reflect.code.CtReturn;
-
-import spoon.processing.AbstractProcessor;
 import spoon.support.reflect.code.CtLiteralImpl;
 
 public class ReturnProcessor extends CustomProcessor<CtReturn<String>> {
 
     public ReturnProcessor() {
-        super("String to 'Youpi banane'");
+        super("Return string to return 'Youpi banane'");
     }
 
     @Override

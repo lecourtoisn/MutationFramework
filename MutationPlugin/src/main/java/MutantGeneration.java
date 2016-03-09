@@ -20,10 +20,10 @@ public class MutantGeneration extends AbstractMojo{
         //Liste des diff�rentes mutations
         List<CustomProcessor> processorList = new ArrayList<CustomProcessor>();
         processorList.add(new RemoveConstructorProcessor());
-        processorList.add(new ReturnProcessor());
+        //processorList.add(new ReturnProcessor());
         processorList.addAll(LogicOperatorProcessor.getSomeCouples(2));
-       // processorList.addAll(BinaryOperatorProcessor.getSomeCouples(4));
-        //processorList.addAll(OperatorProcessor.getSomeCouples(4));
+        processorList.addAll(BinaryOperatorProcessor.getSomeCouples(4));
+        processorList.addAll(OperatorProcessor.getSomeCouples(4));
 
         int i = 0;
 
