@@ -1,6 +1,5 @@
 package processors;
 
-import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.BinaryOperatorKind;
 import spoon.reflect.code.CtBinaryOperator;
 
@@ -18,7 +17,7 @@ public class OperatorProcessor extends CustomProcessor<CtBinaryOperator<BinaryOp
      * @param b
      */
     public OperatorProcessor(BinaryOperatorKind a, BinaryOperatorKind b) {
-        super("Changes " + a + " to " + b);
+        super("Remplace les" + a + " en " + b);
         this.a = a;
         this.b = b;
     }
