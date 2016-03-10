@@ -1,6 +1,6 @@
 #Comment construire le plug-in
  
- * Pour construire notre framework, commencez par le cloner : https://github.com/lecourtoisn/MutationFramework.git
+  * Pour construire notre framework, commencez par le cloner : https://github.com/lecourtoisn/MutationFramework.git
 
   * Une fois celui-ci cloné, vous pouvez lancer l’installation depuis un IDE intégrant maven en lançant la phase clean, suivit de la phase install ou bien en ligne de commande dans le répertoire MutationFramework/MutationPlugin : mvn clean install 
 
