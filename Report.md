@@ -1,6 +1,5 @@
 # Rapport du projet
 
-## Introduction
 Notre framework de tests par mutations permet de valider des tests. En créant des mutants d'un programme donné et en leur appliquant ces tests, on regarde le nombre de mutants tués par les tests, quels sont les tests qui ont tué le plus de mutant… Ces informations sont mises à disposition à la fin de la chaîne dans un rapport HTML. On voit alors quels tests sont les plus fiables (ceux qui tuent le plus de mutants) et ceux qui le sont le moins. 
 
 Si au moins un test n'est pas passé sur le mutant, on dit qu'il l'a tué. Dans le rapport HTML, s’il y a un test qui a tué le mutant on dit que la classe qui le contient a tué le mutant. On a ainsi un diagramme en barre indiquant pour chaque classe de tests, le nombre de mutant tué.
@@ -12,7 +11,8 @@ Différentes bibliothèques sont utilisées pour simplifier certaines tâches co
 
 Notre framework est composé de trois mojos : generate, testing et report pour respectivement générer les mutants, les tester et générer le rapport.
 
-Le mojo “generate” récupère grâce à ses paramètres la liste des mutations à appliquer au code source, et utilise l’api de Spoon pour générer les mutants puis les compiler. Un rapport de génération est crée et indique si le mutant passe la compilation ou non (mutant mort-né).
+##### Le mojo “generate”
+Récupère grâce à ses paramètres la liste des mutations à appliquer au code source, et utilise l’api de Spoon pour générer les mutants puis les compiler. Un rapport de génération est crée et indique si le mutant passe la compilation ou non (mutant mort-né).
 Nous avons 5 types de processeurs mutations différents :
   * BinaryOperatorProcessor qui effectue des mutations sur les opérateurs de comparaison
   * LogicOperatorProcessor qui effectue des mutations sur les opérateurs logiques
@@ -20,9 +20,11 @@ Nous avons 5 types de processeurs mutations différents :
   * OperatorProcessor qui effectue des mutations sur les opérateurs de calcul
   * ReturnProcessor qui effectue une mutations sur les retours de type String
 
-Le mojo “testing” parcourt les projets générés précédemment et exécute via l’api de maven-invoker le plugin Surefire qui s’occupe de lancer les tests JUnit et de générer les rapports.
+##### Le mojo “testing”
+Parcourt les projets générés précédemment et exécute via l’api de maven-invoker le plugin Surefire qui s’occupe de lancer les tests JUnit et de générer les rapports.
 
-Le mojo “report” crée le rapport du test par mutation. Pour récupérer les informations sur les mutants, nous parsons le rapport de génération, un fichier XML, pour chaque mutant (coupleOutput.xml). Il contient une première balise avec la modification effectuée et une autre contenant un booléen disant si le programme compile. S'il compile, nous lisons alors les rapports de JUnit, sur les tests appliqués à ce mutant. Il y en a un par classe de test et ils nous permettent de savoir le nombre de tests ne passant pas sur le mutant, c’est-à-dire de remplir le diagramme circulaire (en complément avec coupleOutput.xml pour les morts nés).
+##### Le mojo “report”
+Crée le rapport du test par mutation. Pour récupérer les informations sur les mutants, nous parsons le rapport de génération, un fichier XML, pour chaque mutant (coupleOutput.xml). Il contient une première balise avec la modification effectuée et une autre contenant un booléen disant si le programme compile. S'il compile, nous lisons alors les rapports de JUnit, sur les tests appliqués à ce mutant. Il y en a un par classe de test et ils nous permettent de savoir le nombre de tests ne passant pas sur le mutant, c’est-à-dire de remplir le diagramme circulaire (en complément avec coupleOutput.xml pour les morts nés).
 
 ## Forces et faiblesses
 #### Forces :
