@@ -32,10 +32,10 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <binaryOperator>4</binaryOperator>
-                            <logicOperator>2</logicOperator>
+                            <binaryOperator>0</binaryOperator>
+                            <logicOperator>0</logicOperator>
                             <modifier>4</modifier>
-                            <operator>4</operator>
+                            <operator>0</operator>
                             <myReturn>true</myReturn>
                         </configuration>
                     </execution>
