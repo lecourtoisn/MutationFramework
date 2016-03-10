@@ -46,7 +46,6 @@ public class MutantGeneration extends AbstractMojo{
         Set<CustomProcessor> processorSet = retrieveProcessors();
         File mutantsRootPath = new File("target/spooned/");
 
-        //int i = 0;
         for (CustomProcessor proc : processorSet) {
             MutantGenerator generator = new MutantGenerator(this.getLog(), proc, mutantsRootPath);
 

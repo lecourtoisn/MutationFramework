@@ -25,6 +25,10 @@ public class MutantGenerator {
         setMutantProject(mutantsRootPath);
     }
 
+    /**
+     * Apply the processor to the sources
+     * @throws Exception
+     */
     public void applyProcessor() throws Exception {
 
         File mutantClasses = new File(mutantProject.getPath().concat("/target/classes"));
@@ -49,6 +53,10 @@ public class MutantGenerator {
         }
     }
 
+    /**
+     * Compile the mutants
+     * @throws Exception
+     */
     public void compileMutants() throws Exception {
         SpoonModelBuilder builder = launcher.getModelBuilder();
 
