@@ -4,7 +4,7 @@ Notre framework de test par mutation est composé des goals suivants :
 generate: génère les mutants. Il est conseillé de l’associer à la phase generate-sources.
 testing: lance les tests du projet sur les mutants générés. Il est conseillé de l’associer à la phase test.
 report: génère un rapport de la chaîne au format HTML. Il est conseillé de l’associer à la phase site.
-En plus du framework, nous proposons aussi un exemple d'utilisation, "SampleSourceCode".
+En plus du framework, nous proposons aussi un exemple d'utilisation, "SampleSourceCode", dont les tests sont volontairement perméables.
 
 /!\ Attention : Le goal “testing” a besoin des .class des tests à exécuter. La phase associée à “testing” doit donc être postérieure à la phase “test-compile” dans le cycle de vie de construction de maven.
 On peut modifier pom.xml pour plus de modularité sur les phases, comme indiqué sur la phase de tests par exemple.
