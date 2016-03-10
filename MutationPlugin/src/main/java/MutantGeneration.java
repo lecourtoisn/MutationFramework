@@ -16,19 +16,19 @@ import java.util.List;
 public class MutantGeneration extends AbstractMojo{
 
 
-    @Parameter
+    @Parameter (property = "generate.binaryOperator", defaultValue = "4")
     private int binaryOperator;
 
-    @Parameter
+    @Parameter (property = "generate.logicOperator", defaultValue = "2")
     private int logicOperator;
 
-    @Parameter
+    @Parameter (property = "generate.modifier", defaultValue = "4")
     private int modifier;
 
-    @Parameter
+    @Parameter (property = "generate.operator", defaultValue = "4")
     private int operator;
 
-    @Parameter
+    @Parameter (property = "generate.myReturn", defaultValue = "true")
     private boolean myReturn;
 
     @Override
