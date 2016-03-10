@@ -47,7 +47,6 @@ Quelque soit la méthode utilisée pour lancer les goals generate, testing et re
     </execution>
   </executions>
 </plugin>
-</code></pre>
 ```
 
 Nous pouvons remarquer que le premier goal “generate” peut prendre en paramètre le nombre de mutants que nous voulons générer pour chaque processeur. Nous pouvons par la même occasion désactiver un processeur en donnant un nombre de 0 mutations. Les processeurs n’offrant qu’une seule mutation peuvent être activés ou déactivés avec un booléen. Les valeurs ci-dessus sont les valeurs par défaut.
