@@ -11,7 +11,7 @@ Quelque soit la méthode utilisée pour lancer les goals generate, testing et re
 
   * Après avoir construit le framework (cf build.md), il faut ajouter le plug-in dans le projet maven à tester. Ouvrez le fichier pom.xml et ajotuez dans la balise plugins:
 
-<pre><code>
+ ```xml
 <plugin>
   <groupId>mutationframework</groupId>
   <artifactId>mutation-maven-plugin</artifactId>
@@ -48,6 +48,7 @@ Quelque soit la méthode utilisée pour lancer les goals generate, testing et re
   </executions>
 </plugin>
 </code></pre>
+```
 
 Nous pouvons remarquer que le premier goal “generate” peut prendre en paramètre le nombre de mutants que nous voulons générer pour chaque processeur. Nous pouvons par la même occasion désactiver un processeur en donnant un nombre de 0 mutations. Les processeurs n’offrant qu’une seule mutation peuvent être activés ou déactivés avec un booléen. Les valeurs ci-dessus sont les valeurs par défaut.
 Il se peut que votre IDE considère les paramètres du plugin comme des erreurs. Si le framework a bien été installé dans le repository local, ces “erreurs” disparaîtront après la première exécution de maven.
