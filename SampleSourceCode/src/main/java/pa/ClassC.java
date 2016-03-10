@@ -1,3 +1,5 @@
+package pa;
+
 public class ClassC {
     public ClassC(String str) {
     }

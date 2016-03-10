@@ -1,3 +1,5 @@
+package pa;
+
 public class ClassB {
     public String methodA() {
         return "Beurk poire";

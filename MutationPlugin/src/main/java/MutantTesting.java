@@ -1,4 +1,3 @@
-import edu.emory.mathcs.backport.java.util.Collections;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -8,6 +7,7 @@ import org.apache.maven.shared.invoker.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 
 @Mojo(name = "testing")
 public class MutantTesting extends AbstractMojo {
